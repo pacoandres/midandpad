@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/layout_background"
+    android:textColor="@color/textcolor"
+    tools:context=".ButtonControlCfg">
+
+    <TextView
+        android:id="@+id/labelbuttoncontrol"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginTop="@dimen/margintop"
+        android:textSize="@dimen/labelsize"
+        android:text="@string/scc"
+        android:fontFamily="sans-serif-black"
+        android:textColor="@color/textcolor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/buttoncontrol"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginTop="@dimen/margintop"
+        android:ems="5"
+        android:inputType="number"
+        android:textAlignment="textEnd"
+        android:textColor="@color/white"
+        android:textSize="@dimen/labelsize"
+        app:layout_constraintStart_toEndOf="@+id/labelbuttoncontrol"
+        app:layout_constraintBottom_toBottomOf="@+id/labelbuttoncontrol"/>
+
+    <TextView
+        android:id="@+id/labelcontroltype"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginTop="@dimen/margintop"
+        android:textSize="@dimen/labelsize"
+        android:text="@string/sbehaviour"
+        android:fontFamily="sans-serif-black"
+        android:textColor="@color/textcolor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labelbuttoncontrol" />
+    <Spinner
+        android:id="@+id/controltype"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margintop"
+        android:layout_marginStart="@dimen/margintop"
+        app:layout_constraintStart_toEndOf="@+id/labelcontroltype"
+        app:layout_constraintBottom_toBottomOf="@+id/labelcontroltype"/>
+
+    <TextView
+        android:id="@+id/labelcontrolon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginTop="@dimen/controlvaluemargin"
+        android:textSize="@dimen/labelsize"
+        android:text="@string/svalueon"
+        android:fontFamily="sans-serif-black"
+        android:textColor="@color/textcolor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labelcontroltype" />
+
+    <EditText
+        android:id="@+id/buttoncontrolon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginTop="@dimen/margintop"
+        android:ems="5"
+        android:inputType="number"
+        android:textAlignment="textEnd"
+        android:textColor="@color/white"
+        android:textSize="@dimen/labelsize"
+        app:layout_constraintStart_toEndOf="@+id/labelcontrolon"
+        app:layout_constraintBottom_toBottomOf="@+id/labelcontrolon"/>
+
+
+
+    <TextView
+        android:id="@+id/labelcontroloff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginTop="@dimen/margintop"
+        android:textSize="@dimen/labelsize"
+        android:text="@string/svalueoff"
+        android:fontFamily="sans-serif-black"
+        android:textColor="@color/textcolor"
+        app:layout_constraintStart_toEndOf="@id/buttoncontrolon"
+        app:layout_constraintBottom_toBottomOf="@+id/buttoncontrolon" />
+
+    <EditText
+        android:id="@+id/buttoncontroloff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginTop="@dimen/margintop"
+        android:ems="5"
+        android:inputType="number"
+        android:textAlignment="textEnd"
+        android:textColor="@color/white"
+        android:textSize="@dimen/labelsize"
+        app:layout_constraintStart_toEndOf="@+id/labelcontroloff"
+        app:layout_constraintBottom_toBottomOf="@+id/labelcontroloff"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

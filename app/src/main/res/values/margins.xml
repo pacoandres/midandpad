@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margintop">30dp</dimen>
+    <dimen name="titleleftmargin">20dp</dimen>
+    <dimen name="stdmargin">20dp</dimen>
+    <dimen name="posttitlemargin">50dp</dimen>
+    <dimen name="controlbuttonmargin">30dp</dimen>
+    <dimen name="midibuttonmargin">10dp</dimen>
+    <integer name="barbottompadding">20</integer>
+    <dimen name="controlvaluemargin">50dp</dimen>
+</resources>

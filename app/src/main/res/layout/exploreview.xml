@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/exploreview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/layout_background">
+
+
+    <TextView
+        android:id="@+id/explorepresets"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/titleleftmargin"
+        android:layout_marginTop="@dimen/margintop"
+        android:fontFamily="sans-serif-black"
+        android:text="@string/presetlist"
+        android:textColor="@color/textcolor"
+        android:textSize="@dimen/titlesize"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ListView
+        android:id="@+id/presetlist"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginTop="@dimen/margintop"
+        android:layout_marginBottom="@dimen/margintop"
+        android:layout_marginEnd="@dimen/stdmargin"
+        android:textColor="@color/textcolor"
+        android:background="@color/presetlistbg"
+        android:listSelector="#FFA0A0A0"
+        android:choiceMode="singleChoice"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/explorepresets"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/listend"/>
+
+
+    <Button
+        android:id="@+id/explorebuttonload"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/stdmargin"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:text="@string/labelload"
+        android:textColor="@color/textcolor"
+        android:textSize="@dimen/labelsize"
+        app:layout_constraintStart_toEndOf="@+id/listend"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/explorebuttondelete"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <Button
+        android:id="@+id/explorebuttondelete"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margintop"
+        android:layout_marginEnd="@dimen/stdmargin"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:text="@string/labeldelete"
+        android:textColor="@color/textcolor"
+        android:textSize="@dimen/labelsize"
+        app:layout_constraintBottom_toTopOf="@+id/explorebuttonrename"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/listend"
+        app:layout_constraintTop_toBottomOf="@+id/explorebuttonload" />
+
+    <Button
+        android:id="@+id/explorebuttonrename"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margintop"
+        android:layout_marginEnd="@dimen/stdmargin"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:text="@string/labelrename"
+        android:textColor="@color/textcolor"
+        android:textSize="@dimen/labelsize"
+        app:layout_constraintBottom_toTopOf="@+id/explorebuttoncancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/listend"
+        app:layout_constraintTop_toBottomOf="@+id/explorebuttondelete" />
+
+    <Button
+        android:id="@+id/explorebuttoncancel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margintop"
+        android:layout_marginEnd="@dimen/stdmargin"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:text="@string/scancel"
+        android:textColor="@color/textcolor"
+        android:textSize="@dimen/labelsize"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/listend"
+        app:layout_constraintTop_toBottomOf="@+id/explorebuttonrename" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/listend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".7" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

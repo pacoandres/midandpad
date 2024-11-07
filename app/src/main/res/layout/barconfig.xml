@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/layout_background"
+    android:textColor="@color/textcolor">
+
+    <TextView
+        android:id="@+id/labelbarconfig"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/titleleftmargin"
+        android:layout_marginTop="@dimen/margintop"
+        android:textSize="@dimen/titlesize"
+        android:text="@string/sbarconfig"
+        android:fontFamily="sans-serif-black"
+        android:textColor="@color/textcolor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/labelbarname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginTop="@dimen/posttitlemargin"
+        android:textSize="@dimen/labelsize"
+        android:text="@string/sname"
+        android:fontFamily="sans-serif-black"
+        android:textColor="@color/textcolor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labelbarconfig" />
+
+    <EditText
+        android:id="@+id/barname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="20"
+        android:inputType="text"
+        android:textSize="@dimen/labelsize"
+        android:textColor="@color/white"
+        android:layout_marginTop="@dimen/margintop"
+        android:layout_marginStart="@dimen/stdmargin"
+        app:layout_constraintStart_toEndOf="@+id/labelbarname"
+        app:layout_constraintBottom_toBottomOf="@+id/labelbarname"/>
+
+    <TextView
+        android:id="@+id/labelbarchannel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginTop="@dimen/margintop"
+        android:textSize="@dimen/labelsize"
+        android:text="@string/slabelchannel"
+        android:fontFamily="sans-serif-black"
+        android:textColor="@color/textcolor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labelbarname" />
+
+    <Spinner
+        android:id="@+id/barchannel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/labelsize"
+        android:textColor="@color/white"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginTop="@dimen/margintop"
+        app:layout_constraintStart_toEndOf="@+id/labelbarchannel"
+        app:layout_constraintBottom_toBottomOf="@+id/labelbarchannel"/>
+
+    <TextView
+        android:id="@+id/labelbartype"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginTop="@dimen/margintop"
+        android:textSize="@dimen/labelsize"
+        android:text="@string/stype"
+        android:fontFamily="sans-serif-black"
+        android:textColor="@color/textcolor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labelbarchannel" />
+
+    <Spinner
+        android:id="@+id/bartype"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/labelsize"
+        android:textColor="@color/white"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginTop="@dimen/margintop"
+        app:layout_constraintStart_toEndOf="@+id/labelbartype"
+        app:layout_constraintBottom_toBottomOf="@+id/labelbartype"/>
+
+    <TextView
+        android:id="@+id/labelbarcc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margintop"
+        android:layout_marginTop="@dimen/margintop"
+        android:textSize="@dimen/labelsize"
+        android:text="@string/scc"
+        android:fontFamily="sans-serif-black"
+        android:textColor="@color/textcolor"
+        app:layout_constraintStart_toEndOf="@+id/bartype"
+        app:layout_constraintTop_toBottomOf="@+id/labelbarchannel" />
+
+    <EditText
+        android:id="@+id/barcc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="5"
+        android:inputType="number"
+        android:textAlignment="textEnd"
+        android:textSize="@dimen/labelsize"
+        android:textColor="@color/white"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginTop="@dimen/margintop"
+        app:layout_constraintStart_toEndOf="@+id/labelbarcc"
+        app:layout_constraintBottom_toBottomOf="@+id/labelbarcc" />
+
+    <CheckBox
+        android:id="@+id/barrz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sbarrz"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginTop="@dimen/margintop"
+        android:textSize="@dimen/labelsize"
+        android:fontFamily="sans-serif-black"
+        android:textColor="@color/textcolor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labelbarcc" />
+
+    <TextView
+        android:id="@+id/labelbarzerval"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginTop="@dimen/margintop"
+        android:textSize="@dimen/labelsize"
+        android:text="@string/sbarzeroval"
+        android:fontFamily="sans-serif-black"
+        android:textColor="@color/textcolor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/barrz" />
+
+    <EditText
+        android:id="@+id/barzerovalue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="5"
+        android:inputType="number"
+        android:textAlignment="textEnd"
+        android:textSize="@dimen/labelsize"
+        android:textColor="@color/white"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginTop="@dimen/margintop"
+        app:layout_constraintStart_toEndOf="@+id/labelbarzerval"
+        app:layout_constraintBottom_toBottomOf="@+id/labelbarzerval" />
+
+    <Button
+        android:id="@+id/barpropcancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/scancel"
+        android:layout_margin="@dimen/controlbuttonmargin"
+        android:textSize="@dimen/labelsize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <Button
+        android:id="@+id/barpropok"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sok"
+        android:layout_margin="@dimen/controlbuttonmargin"
+        android:textSize="@dimen/labelsize"
+        app:layout_constraintEnd_toStartOf="@+id/barpropcancel"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

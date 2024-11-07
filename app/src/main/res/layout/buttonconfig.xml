@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/layout_background"
+    android:textColor="@color/textcolor"
+    tools:context=".BtnConfigScreen"
+    >
+<androidx.constraintlayout.widget.ConstraintLayout
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintHeight_default="spread"
+    android:background="@color/layout_background"
+    android:textColor="@color/textcolor"
+    >
+
+    <TextView
+        android:id="@+id/labelbuttonconfig"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/titleleftmargin"
+        android:layout_marginTop="@dimen/margintop"
+        android:textSize="@dimen/titlesize"
+        android:text="@string/sbuttonconfig"
+        android:fontFamily="sans-serif-black"
+        android:textColor="@color/textcolor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/labelbuttonname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginTop="@dimen/posttitlemargin"
+        android:textSize="@dimen/labelsize"
+        android:text="@string/sname"
+        android:fontFamily="sans-serif-black"
+        android:textColor="@color/textcolor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labelbuttonconfig" />
+<!--Commented textColor. For uncomment add android namespace-->
+    <EditText
+        android:id="@+id/buttonname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="20"
+        android:inputType="text"
+        android:textSize="@dimen/labelsize"
+        android:textColor="@color/white"
+        android:layout_marginStart="@dimen/stdmargin"
+        app:layout_constraintStart_toEndOf="@+id/labelbuttonname"
+        app:layout_constraintBottom_toBottomOf="@+id/labelbuttonname"/>
+    <TextView
+        android:id="@+id/labelbuttontype"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginTop="@dimen/margintop"
+        android:textSize="@dimen/labelsize"
+        android:text="@string/stype"
+        android:fontFamily="sans-serif-black"
+        android:textColor="@color/textcolor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labelbuttonname" />
+
+    <Spinner
+        android:id="@+id/buttontype"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/labelsize"
+        android:textColor="@color/white"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginTop="@dimen/margintop"
+        app:layout_constraintStart_toEndOf="@+id/labelbuttontype"
+        app:layout_constraintBottom_toBottomOf="@+id/labelbuttontype"/>
+
+    <TextView
+        android:id="@+id/labelbuttonchannel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margintop"
+        android:layout_marginTop="@dimen/margintop"
+        android:textSize="@dimen/labelsize"
+        android:text="@string/slabelchannel"
+        android:fontFamily="sans-serif-black"
+        android:textColor="@color/textcolor"
+        app:layout_constraintStart_toEndOf="@+id/buttontype"
+        app:layout_constraintBottom_toBottomOf="@+id/labelbuttontype" />
+
+    <Spinner
+        android:id="@+id/buttonchannel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/labelsize"
+        android:textColor="@color/white"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginTop="@dimen/margintop"
+        app:layout_constraintStart_toEndOf="@+id/labelbuttonchannel"
+        app:layout_constraintBottom_toBottomOf="@+id/labelbuttonchannel"/>
+
+    <FrameLayout
+        android:id="@+id/propscontainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginTop="@dimen/margintop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labelbuttonchannel"
+        />
+    <Button
+        android:id="@+id/buttonpropcancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/scancel"
+        android:layout_margin="@dimen/controlbuttonmargin"
+        android:textSize="@dimen/labelsize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/propscontainer" />
+
+    <Button
+        android:id="@+id/buttonpropok"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sok"
+        android:layout_margin="@dimen/controlbuttonmargin"
+        android:textSize="@dimen/labelsize"
+        app:layout_constraintEnd_toStartOf="@+id/buttonpropcancel"
+        app:layout_constraintTop_toBottomOf="@+id/propscontainer" />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/midiconfig"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/layout_background">
+
+    <TextView
+        android:id="@+id/available_devices"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/titleleftmargin"
+        android:layout_marginTop="@dimen/margintop"
+        android:fontFamily="sans-serif-black"
+        android:text="@string/available_devices"
+        android:textColor="@color/textcolor"
+        android:textSize="@dimen/titlesize"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/ndevices"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:text="0"
+        android:textColor="@color/textcolor"
+        android:textSize="@dimen/titlesize"
+        app:layout_constraintStart_toEndOf="@+id/available_devices"
+        app:layout_constraintBottom_toBottomOf="@+id/available_devices" />
+
+    <TextView
+        android:id="@+id/labeldevice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginEnd="@dimen/stdmargin"
+        android:layout_marginTop="@dimen/posttitlemargin"
+        android:text="@string/slabeldevice"
+        android:textSize="@dimen/labelsize"
+        android:textColor="@color/textcolor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/available_devices" />
+
+    <Spinner
+        android:id="@+id/selectdevice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginTop="@dimen/posttitlemargin"
+        android:textSize="@dimen/labelsize"
+        android:textColor="@color/textcolor"
+        app:layout_constraintStart_toEndOf="@+id/labeldevice"
+        app:layout_constraintTop_toBottomOf="@+id/available_devices"/>
+
+    <TextView
+        android:id="@+id/labelporto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginEnd="@dimen/stdmargin"
+        android:layout_marginTop="@dimen/margintop"
+        android:textSize="@dimen/labelsize"
+        android:text="@string/slabelporto"
+        android:textColor="@color/textcolor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labeldevice"/>
+
+    <Spinner
+        android:id="@+id/selectporto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:textSize="@dimen/labelsize"
+        android:textColor="@color/textcolor"
+        android:textAlignment="textEnd"
+        app:layout_constraintTop_toTopOf="@+id/labelporto"
+        app:layout_constraintStart_toEndOf="@+id/labelporto"/>
+
+
+    <TextView
+        android:id="@+id/labelporti"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margintop"
+        android:layout_marginEnd="@dimen/stdmargin"
+        android:layout_marginTop="@dimen/margintop"
+        android:textSize="@dimen/labelsize"
+        android:text="@string/slabelporti"
+        android:textColor="@color/textcolor"
+        app:layout_constraintStart_toEndOf="@id/selectporto"
+        app:layout_constraintTop_toBottomOf="@+id/labeldevice"/>
+
+    <Spinner
+        android:id="@+id/selectporti"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:textSize="@dimen/labelsize"
+        android:textColor="@color/textcolor"
+        android:textAlignment="textEnd"
+        app:layout_constraintTop_toTopOf="@+id/labelporto"
+        app:layout_constraintStart_toEndOf="@+id/labelporti"/>
+
+    <TextView
+        android:id="@+id/labelchannel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginEnd="@dimen/stdmargin"
+        android:layout_marginTop="@dimen/margintop"
+        android:text="@string/slabeldefchannel"
+        android:textSize="@dimen/labelsize"
+        android:textColor="@color/textcolor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labelporto" />
+
+    <Spinner
+        android:id="@+id/selectchannel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:textAlignment="textEnd"
+        android:textColor="@color/textcolor"
+        android:textSize="@dimen/labelsize"
+        app:layout_constraintStart_toEndOf="@+id/labelchannel"
+        app:layout_constraintTop_toTopOf="@+id/labelchannel" />
+
+    <TextView
+        android:id="@+id/labelppq"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginEnd="@dimen/stdmargin"
+        android:layout_marginTop="@dimen/posttitlemargin"
+        android:text="@string/slabeldevice"
+        android:textSize="@dimen/labelsize"
+        android:textColor="@color/textcolor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/selectchannel" />
+
+    <EditText
+        android:id="@+id/ppq"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:ems="5"
+        android:inputType="number"
+        android:textAlignment="textEnd"
+        android:textColor="@color/white"
+        android:textSize="@dimen/labelsize"
+        app:layout_constraintStart_toEndOf="@+id/labelppq"
+        app:layout_constraintBottom_toBottomOf="@+id/labelppq"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginEnd="@dimen/stdmargin"
+        android:layout_marginTop="@dimen/margintop"
+        android:text="@string/sclockdisclaimer"
+        android:textAllCaps="false"
+        android:textColor="@color/textcolor"
+        android:textSize="@dimen/labelsize"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labelppq" />
+
+    <Button
+        android:id="@+id/opendevice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/controlbuttonmargin"
+        android:textSize="@dimen/labelsize"
+        android:text="@string/sopen"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/cancelcalib"/>
+    <Button
+        android:id="@+id/cancelcalib"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/controlbuttonmargin"
+        android:textSize="@dimen/labelsize"
+        android:text="@string/scancel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

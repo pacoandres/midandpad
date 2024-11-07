@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="titlesize">48sp</dimen>
+    <dimen name="labelsize">16sp</dimen>
+    <dimen name="midibuttonsize">18sp</dimen>
+    <dimen name="barlabelsize">18sp</dimen>
+    <dimen name="menubuttonsize">64dp</dimen>
+    <dimen name="calibbtnsize">100dp</dimen>
+    <dimen name="statussize">20sp</dimen>
+    <dimen name="statusclocksize">18sp</dimen>
+    <dimen name="midilogoheight">18dp</dimen>
+</resources>

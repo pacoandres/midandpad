@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/layout_background"
+    tools:context=".MainActivity">
+<!--Row 1-->
+    <org.gnu.itsmoroto.midandpad.EventButton
+        android:id="@+id/button11"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/midibuttonmargin"
+        android:text="Button 1"
+        android:textSize="@dimen/midibuttonsize"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button12"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/button21"
+        />
+
+    <org.gnu.itsmoroto.midandpad.EventButton
+        android:id="@+id/button12"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/midibuttonmargin"
+        android:text="Button 2"
+        android:textSize="@dimen/midibuttonsize"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button13"
+        app:layout_constraintStart_toEndOf="@+id/button11"
+        app:layout_constraintBottom_toTopOf="@id/button22"
+        />
+
+    <org.gnu.itsmoroto.midandpad.EventButton
+        android:id="@+id/button13"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/midibuttonmargin"
+        android:text="Button 3"
+        android:textSize="@dimen/midibuttonsize"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/button14"
+        app:layout_constraintStart_toEndOf="@+id/button12"
+        app:layout_constraintBottom_toTopOf="@id/button23"
+        />
+    <org.gnu.itsmoroto.midandpad.EventButton
+        android:id="@+id/button14"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="Button 3"
+        android:layout_margin="@dimen/midibuttonmargin"
+        android:textSize="@dimen/midibuttonsize"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/buttonend"
+        app:layout_constraintStart_toEndOf="@+id/button13"
+        app:layout_constraintBottom_toTopOf="@id/button24"
+        />
+<!--Row 2-->
+    <org.gnu.itsmoroto.midandpad.EventButton
+        android:id="@+id/button21"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/midibuttonmargin"
+        android:textSize="@dimen/midibuttonsize"
+        android:text="Button 1"
+        app:layout_constraintEnd_toStartOf="@+id/button22"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button11"
+        app:layout_constraintBottom_toTopOf="@id/button31"
+        />
+
+    <org.gnu.itsmoroto.midandpad.EventButton
+        android:id="@+id/button22"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/midibuttonmargin"
+        android:textSize="@dimen/midibuttonsize"
+        android:text="Button 2"
+        app:layout_constraintEnd_toStartOf="@+id/button23"
+        app:layout_constraintStart_toEndOf="@+id/button21"
+        app:layout_constraintTop_toBottomOf="@+id/button12"
+        app:layout_constraintBottom_toTopOf="@id/button32"
+        />
+
+    <org.gnu.itsmoroto.midandpad.EventButton
+        android:id="@+id/button23"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/midibuttonmargin"
+        android:textSize="@dimen/midibuttonsize"
+        android:text="Button 3"
+        app:layout_constraintEnd_toStartOf="@id/button24"
+        app:layout_constraintStart_toEndOf="@+id/button22"
+        app:layout_constraintTop_toBottomOf="@+id/button13"
+        app:layout_constraintBottom_toTopOf="@id/button33"
+        />
+    <org.gnu.itsmoroto.midandpad.EventButton
+        android:id="@+id/button24"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="Button 3"
+        android:layout_margin="@dimen/midibuttonmargin"
+        android:textSize="@dimen/midibuttonsize"
+        app:layout_constraintEnd_toStartOf="@id/buttonend"
+        app:layout_constraintStart_toEndOf="@+id/button23"
+        app:layout_constraintTop_toBottomOf="@+id/button14"
+        app:layout_constraintBottom_toTopOf="@id/button34"
+        />
+
+    <!--Row 2-->
+    <org.gnu.itsmoroto.midandpad.EventButton
+        android:id="@+id/button31"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/midibuttonmargin"
+        android:textSize="@dimen/midibuttonsize"
+        android:text="Button 1"
+        app:layout_constraintEnd_toStartOf="@+id/button32"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button21"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <org.gnu.itsmoroto.midandpad.EventButton
+        android:id="@+id/button32"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/midibuttonmargin"
+        android:textSize="@dimen/midibuttonsize"
+        android:text="Button 2"
+        app:layout_constraintEnd_toStartOf="@+id/button33"
+        app:layout_constraintStart_toEndOf="@+id/button31"
+        app:layout_constraintTop_toBottomOf="@+id/button22"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <org.gnu.itsmoroto.midandpad.EventButton
+        android:id="@+id/button33"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/midibuttonmargin"
+        android:textSize="@dimen/midibuttonsize"
+        android:text="Button 3"
+        app:layout_constraintEnd_toStartOf="@id/button34"
+        app:layout_constraintStart_toEndOf="@+id/button32"
+        app:layout_constraintTop_toBottomOf="@+id/button23"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+    <org.gnu.itsmoroto.midandpad.EventButton
+        android:id="@+id/button34"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="Button 3"
+        android:layout_margin="@dimen/midibuttonmargin"
+        android:textSize="@dimen/midibuttonsize"
+        app:layout_constraintEnd_toStartOf="@id/buttonend"
+        app:layout_constraintStart_toEndOf="@+id/button33"
+        app:layout_constraintTop_toBottomOf="@+id/button24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <!--<com.lukelorusso.verticalseekbar.VerticalSeekBar
+        android:id="@+id/ctrl1"
+        android:layout_width="0dp"
+        android:layout_height="600dp"
+        android:layout_margin="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button14"
+        app:layout_constraintTop_toTopOf="parent"
+        app:vsb_bar_background="@color/layout_background"
+        app:vsb_bar_progress="@color/buttoncolor"
+        app:vsb_show_thumb="true"
+        app:vsb_thumb_container_tint="@color/pressbuttoncolor"
+        app:vsb_/>-->
+    <!--Esta no funciona-->
+
+    <!--Esta parece que sí:
+    https://github.com/alpbak/BoxedVerticalSeekBar-->
+    <!--<abak.tr.com.boxedverticalseekbar.BoxedVertical-->
+    <LinearLayout
+        android:id="@+id/statuslayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintStart_toEndOf="@+id/buttonend"
+        app:layout_constraintEnd_toStartOf="@+id/appbar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/ctrl1">
+
+        <CheckBox
+            android:id="@+id/havemidi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            />
+
+        <ImageView
+            android:id="@+id/midilogo"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/midilogoheight"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            app:srcCompat="@drawable/midi_logo" />
+
+        <CheckBox
+            android:id="@+id/haveclock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sclock"
+            android:textColor="@color/textcolor"
+            android:textSize="@dimen/statusclocksize"
+            android:textStyle="bold"
+            />
+        
+    </LinearLayout>
+        
+    <org.gnu.itsmoroto.midandpad.CCBar
+        android:id="@+id/ctrl1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:backgroundColor="@color/noprogresscolor"
+        app:progressColor="@color/progresscolor"
+        app:textColor="@color/bartextcolor"
+        app:defaultValue="140"
+        app:imageEnabled="false"
+        app:textEnabled="false"
+        app:max="127"
+        app:step="1"
+        app:textBottomPadding="@integer/barbottompadding"
+        app:textSize="@dimen/barlabelsize"
+        app:touchDisabled="true"
+        android:layout_margin="@dimen/stdmargin"
+        app:layout_constraintBottom_toTopOf="@+id/label1"
+        app:layout_constraintEnd_toStartOf="@+id/ctrl2"
+        app:layout_constraintStart_toEndOf="@+id/buttonend"
+        app:layout_constraintTop_toBottomOf="@+id/statuslayout"/>
+    <org.gnu.itsmoroto.midandpad.CCBar
+        android:id="@+id/ctrl2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:backgroundColor="@color/noprogresscolor"
+        app:progressColor="@color/progresscolor"
+        app:textColor="@color/bartextcolor"
+        app:defaultValue="140"
+        app:imageEnabled="false"
+        app:textEnabled="false"
+        app:max="127"
+        app:step="1"
+        app:textBottomPadding="@integer/barbottompadding"
+        app:textSize="@dimen/barlabelsize"
+        app:touchDisabled="true"
+        android:layout_margin="@dimen/stdmargin"
+        app:layout_constraintBottom_toTopOf="@+id/label2"
+        app:layout_constraintEnd_toStartOf="@+id/appbar"
+        app:layout_constraintStart_toEndOf="@+id/ctrl1"
+        app:layout_constraintTop_toBottomOf="@+id/statuslayout"/>
+
+    <org.gnu.itsmoroto.midandpad.CCBar
+        android:id="@+id/ctrl3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:backgroundColor="@color/noprogresscolor"
+        app:progressColor="@color/progresscolor"
+        app:textColor="@color/bartextcolor"
+        app:defaultValue="140"
+        app:imageEnabled="false"
+        app:textEnabled="false"
+        app:max="127"
+        app:step="1"
+        app:textBottomPadding="@integer/barbottompadding"
+        app:textSize="@dimen/barlabelsize"
+        app:touchDisabled="true"
+        android:layout_margin="@dimen/stdmargin"
+        app:layout_constraintBottom_toTopOf="@+id/label3"
+        app:layout_constraintEnd_toStartOf="@+id/ctrl4"
+        app:layout_constraintStart_toEndOf="@+id/buttonend"
+        app:layout_constraintTop_toBottomOf="@+id/label1"/>
+    <org.gnu.itsmoroto.midandpad.CCBar
+        android:id="@+id/ctrl4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:backgroundColor="@color/noprogresscolor"
+        app:progressColor="@color/progresscolor"
+        app:textColor="@color/bartextcolor"
+        app:defaultValue="140"
+        app:imageEnabled="false"
+        app:textEnabled="false"
+        app:max="127"
+        app:step="1"
+        app:textBottomPadding="@integer/barbottompadding"
+        app:textSize="@dimen/barlabelsize"
+        app:touchDisabled="true"
+        android:layout_margin="@dimen/stdmargin"
+        app:layout_constraintBottom_toTopOf="@+id/label4"
+        app:layout_constraintEnd_toStartOf="@+id/appbar"
+        app:layout_constraintStart_toEndOf="@+id/ctrl3"
+        app:layout_constraintTop_toBottomOf="@+id/label2"/>
+
+    <TextView
+        android:id="@+id/label1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/stdmargin"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginEnd="@dimen/stdmargin"
+        android:textSize="@dimen/barlabelsize"
+        android:inputType="none"
+        android:text="TextView"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/ctrl3"
+        app:layout_constraintEnd_toStartOf="@+id/label2"
+        app:layout_constraintStart_toEndOf="@+id/buttonend"
+        app:layout_constraintTop_toBottomOf="@+id/ctrl1" />
+    <TextView
+        android:id="@+id/label2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/stdmargin"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginEnd="@dimen/stdmargin"
+        android:textSize="@dimen/barlabelsize"
+        android:text="TextView"
+        android:inputType="none"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/ctrl4"
+        app:layout_constraintEnd_toStartOf="@+id/appbar"
+        app:layout_constraintStart_toEndOf="@+id/label1"
+        app:layout_constraintTop_toBottomOf="@+id/ctrl2" />
+    <TextView
+        android:id="@+id/label3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/stdmargin"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginEnd="@dimen/stdmargin"
+        android:textSize="@dimen/barlabelsize"
+        android:text="TextView"
+        android:inputType="none"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/label4"
+        app:layout_constraintStart_toEndOf="@+id/buttonend"
+        app:layout_constraintTop_toBottomOf="@+id/ctrl3" />
+    <TextView
+        android:id="@+id/label4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/stdmargin"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginEnd="@dimen/stdmargin"
+        android:textSize="@dimen/barlabelsize"
+        android:text="TextView"
+        android:inputType="none"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/appbar"
+        app:layout_constraintStart_toEndOf="@+id/label3"
+        app:layout_constraintTop_toBottomOf="@+id/ctrl4" />
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_margin="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ctrl4"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/layout_background">
+
+        <!--<androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">-->
+
+        <ImageButton
+            android:id="@+id/buttonmidi"
+            android:layout_width="@dimen/menubuttonsize"
+            android:layout_height="@dimen/menubuttonsize"
+            android:scaleType="fitCenter"
+            android:src="@drawable/midiconnector"
+            app:layout_constraintBottom_toTopOf="@+id/buttonexplore"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/buttoncalib"
+            android:layout_width="@dimen/menubuttonsize"
+            android:layout_height="@dimen/menubuttonsize"
+            android:scaleType="fitCenter"
+            android:src="@drawable/calibration"
+            app:layout_constraintBottom_toTopOf="@+id/buttonexplore"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonmidi" />
+
+            <ImageButton
+                android:id="@+id/buttonexplore"
+                android:layout_width="@dimen/menubuttonsize"
+                android:layout_height="@dimen/menubuttonsize"
+                android:layout_marginTop="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/explore_icon"
+                app:layout_constraintBottom_toTopOf="@+id/buttonsave"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/buttoncalib" />
+            <ImageButton
+                android:id="@+id/buttonsave"
+                android:layout_width="@dimen/menubuttonsize"
+                android:layout_height="@dimen/menubuttonsize"
+                android:scaleType="fitCenter"
+
+                android:layout_marginTop="10dp"
+                android:src="@drawable/saveicon"
+                app:layout_constraintBottom_toTopOf="@+id/buttonsaveas"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/buttonexplore" />
+
+            <ImageButton
+                android:id="@+id/buttonsaveas"
+                android:layout_width="@dimen/menubuttonsize"
+                android:layout_height="@dimen/menubuttonsize"
+                android:scaleType="fitCenter"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/saveasicon"
+                app:layout_constraintBottom_toTopOf="@+id/buttonedit"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/buttonsave" />
+
+            <ImageButton
+                android:id="@+id/buttonedit"
+                android:layout_width="@dimen/menubuttonsize"
+                android:layout_height="@dimen/menubuttonsize"
+                android:adjustViewBounds="true"
+                android:background="@android:drawable/btn_default"
+                android:scaleType="fitCenter"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/editicon"
+                app:layout_constraintBottom_toTopOf="@+id/buttonrun"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/buttonsaveas" />
+
+            <ImageButton
+                android:id="@+id/buttonrun"
+                android:layout_width="@dimen/menubuttonsize"
+                android:layout_height="@dimen/menubuttonsize"
+                android:adjustViewBounds="true"
+                android:background="@color/design_default_color_secondary"
+                android:scaleType="fitCenter"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/playbuttonclear"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/buttonedit" />
+        <!--</androidx.constraintlayout.widget.ConstraintLayout>-->
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/buttonend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.60" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/touchcalibration"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/layout_background"
+    >
+
+    <TextView
+        android:id="@+id/calibrationtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="@dimen/titleleftmargin"
+        android:fontFamily="sans-serif-black"
+        android:text="@string/slabelcalibration"
+        android:textSize="@dimen/titlesize"
+        android:textColor="@color/textcolor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/calibrationdisclaimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margintop"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:text="@string/scalibrationdisclaimer"
+        android:textColor="@color/textcolor"
+        android:textSize="@dimen/labelsize"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/calibrationtitle"/>
+
+    <CheckBox
+        android:id="@+id/isfixedvelocity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginTop="@dimen/margintop"
+        android:text="@string/sfixedvelocity"
+        android:textColor="@color/textcolor"
+        android:textSize="@dimen/labelsize"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/calibrationdisclaimer" />
+
+    <EditText
+        android:id="@+id/fixedvelocity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:inputType="number"
+        android:textColor="@color/textcolor"
+        android:textSize="@dimen/labelsize"
+        app:layout_constraintBottom_toBottomOf="@+id/isfixedvelocity"
+        app:layout_constraintStart_toEndOf="@+id/isfixedvelocity" />
+
+    <org.gnu.itsmoroto.midandpad.CalibrationButton
+        android:id="@+id/minvelocity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margintop"
+        android:minHeight="@dimen/calibbtnsize"
+        android:minWidth="@dimen/calibbtnsize"
+        android:textSize="@dimen/labelsize"
+        android:text="@string/sminvelocity"
+        app:layout_constraintTop_toBottomOf="@+id/isfixedvelocity"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/maxvelocity"/>
+
+    <TextView
+        android:id="@+id/labelminpress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margintop"
+        android:textColor="@color/textcolor"
+        android:textSize="@dimen/labelsize"
+        app:layout_constraintTop_toBottomOf="@id/minvelocity"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/labelmaxpress"/>
+
+    <!--<TextView
+        android:id="@+id/labelmintime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margintop"
+        android:textColor="@color/textcolor"
+        android:textSize="@dimen/labelsize"
+        app:layout_constraintTop_toBottomOf="@id/labelminpress"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/labelmaxtime"/>-->
+
+    <org.gnu.itsmoroto.midandpad.CalibrationButton
+        android:id="@+id/maxvelocity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/calibbtnsize"
+        android:minWidth="@dimen/calibbtnsize"
+        android:textSize="@dimen/labelsize"
+        android:text="@string/smaxvelocity"
+        app:layout_constraintTop_toTopOf="@id/minvelocity"
+        app:layout_constraintStart_toEndOf="@+id/minvelocity"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <TextView
+        android:id="@+id/labelmaxpress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margintop"
+        android:textColor="@color/textcolor"
+        android:textSize="@dimen/labelsize"
+        app:layout_constraintTop_toBottomOf="@id/maxvelocity"
+        app:layout_constraintStart_toEndOf="@+id/labelminpress"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!--<TextView
+        android:id="@+id/labelmaxtime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margintop"
+        android:textColor="@color/textcolor"
+        android:textSize="@dimen/labelsize"
+        app:layout_constraintTop_toBottomOf="@id/labelmaxpress"
+        app:layout_constraintStart_toEndOf="@+id/labelmintime"
+        app:layout_constraintEnd_toEndOf="parent"/>-->
+
+
+    <Button
+        android:id="@+id/okcalib"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/controlbuttonmargin"
+        android:textSize="@dimen/labelsize"
+        android:text="@string/sok"
+        app:layout_constraintTop_toBottomOf="@+id/labelmaxpress"
+        app:layout_constraintEnd_toStartOf="@+id/cancelcalib"/>
+    <Button
+        android:id="@+id/cancelcalib"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/controlbuttonmargin"
+        android:textSize="@dimen/labelsize"
+        android:text="@string/scancel"
+        app:layout_constraintTop_toBottomOf="@+id/labelmaxpress"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

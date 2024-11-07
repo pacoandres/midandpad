@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">Midandpad</string>
+    <string name="available_devices">Available MIDI devices:</string>
+    <string name="slabeldevice">Device:</string>
+    <string name="slabelporto" translatable="false">Input port:</string>
+    <string name="sopen">Open</string>
+    <string name="scancel">Cancel</string>
+    <string name="unknowdevice">Unknown device</string>
+    <string name="slabeldefchannel">Default channel</string>
+    <string name="sdefault">Default</string>
+    <string name="slabelchannel">Channel</string>
+    <string name="slabelcalibration">Calibration</string>
+    <string name="sminvelocity" translatable="false">Min. Velocity</string>
+    <string name="smaxvelocity" translatable="false">Max. Velocity</string>
+    <string name="presetlist">Presets list</string>
+    <string name="labelload">Load</string>
+    <string name="labeldelete">Detele</string>
+    <string name="labelrename">Rename</string>
+    <string name="sok">OK</string>
+    <string name="sdeletepreset">Delete preset</string>
+    <string name="srenamepreset">New name for preset</string>
+    <string name="snewpreset">New preset\'s name</string>
+    <string name="spresetnameexists">The preset name \"[presetname]\" already exists</string>
+    <string name="sduplicatedname">Duplicated name</string>
+    <string name="sbuttonconfig">Button configuration</string>
+    <string name="sname">Name</string>
+    <string name="stype">Type</string>
+    <string name="snote">Note</string>
+    <string name="scc" translatable="false">CC</string>
+    <string name="sprogram">Program</string>
+    <string name="slatch">Latch</string>
+    <string name="ssendnoteoff">Send note off</string>
+    <string name="sbarconfig">Slider configuration</string>
+    <string name="sbarrz">Return to Zero</string>
+    <string name="sbarzeroval">Zero value</string>
+    <string name="svalueoff">Off value</string>
+    <string name="svalueon">On value</string>
+    <string name="serrorfulfillment">All fields are mandatory</string>
+    <string name="snomidi">This device does not support MIDI. Exiting.</string>
+    <string name="sroll" translatable="false">Roll</string>
+    <string name="sflam" translatable="false">Flam</string>
+    <string name="schord">Chord</string>
+    <string name="slabelporti" translatable="false">Output port:</string>
+    <string name="swholenote" translatable="false">𝅝</string>
+    <string name="shalfnote" translatable="false">𝅗𝅥</string>
+    <string name="squarternote" translatable="false">𝅘𝅥</string>
+    <string name="seigthnote" translatable="false">𝅘𝅥𝅮</string>
+    <string name="ssixteenthnote" translatable="false">𝅘𝅥𝅯</string>
+    <string name="sthridtysecondnote" translatable="false">𝅘𝅥𝅰</string>
+    <string name="snosendoff">No send off</string>
+    <string name="ssendoff">Send off</string>
+    <string name="sbehaviour">Mode</string>
+    <string name="srolllength">Note length</string>
+    <string name="striplet">Triplet</string>
+    <string name="stoggle">Toggle</string>
+    <string name="sfixed">Fixed</string>
+    <string name="smomentary">Momentary</string>
+    <string name="sfulloff">Full sending off</string>
+    <string name="sfullnoff">Full not sending off</string>
+    <string name="sarpeggioff">Arpeggio sending off</string>
+    <string name="sarpeggionoff">Arpeggion not sending off</string>
+    <string name="schordnotes">Chord notes</string>
+    <string name="scalibrationdisclaimer">Pressure sensitivity is achieved by combining the sensitivity of the device with the duration of the press.\nThis may not work properly on your device, if so select a fixed note velocity (default).</string>
+    <string name="sfixedvelocity">Fixed velocity:</string>
+    <string name="sminpress">Min. pressure (device units):</string>
+    <string name="smaxpress">Max. pressure (device units):</string>
+    <string name="smintime">Min time (ms):</string>
+    <string name="smaxtime">Max. time (ms):</string>
+    <string name="smidivalexceeded">MIDI value exceeded.</string>
+    <string name="svalexceedmessage">The value of [field] must be between 0 and [value].</string>
+    <string name="svelocity">Velocity</string>
+    <string name="sclockdisclaimer">For Roll and Arpeggio modes to work the application must receive Timing Clock messages from the sequencer.\nOtherwise they will do nothing.</string>
+    <string name="sclock" translatable="false">CLOCK</string>
+    <string name="spresetloaded">Preset [presetname] loaded</string>
+    <string name="spresetsaved">Preset [presetname] saved</string>
+    <string name="sbend" translatable="false">Pitchbend</string>
+</resources>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/layout_background"
+    android:textColor="@color/textcolor"
+    tools:context=".ButtonNoteCfg">
+
+    <TextView
+        android:id="@+id/labelbuttonnote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginTop="@dimen/margintop"
+        android:textSize="@dimen/labelsize"
+        android:text="@string/snote"
+        android:fontFamily="sans-serif-black"
+        android:textColor="@color/textcolor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/buttonnote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/labelsize"
+        android:textColor="@color/white"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginTop="@dimen/margintop"
+        app:layout_constraintStart_toEndOf="@+id/labelbuttonnote"
+        app:layout_constraintBottom_toBottomOf="@+id/labelbuttonnote"/>
+
+    <TextView
+        android:id="@+id/labelnotebehaviour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/labelsize"
+        android:textColor="@color/textcolor"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginTop="@dimen/margintop"
+        android:text="@string/sbehaviour"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labelbuttonnote"/>
+    <Spinner
+        android:id="@+id/notebehaviour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/labelsize"
+        android:textColor="@color/white"
+        android:layout_marginStart="@dimen/stdmargin"
+        app:layout_constraintStart_toEndOf="@+id/labelnotebehaviour"
+        app:layout_constraintBottom_toBottomOf="@+id/labelnotebehaviour"/>
+
+
+    <TextView
+        android:id="@+id/labelrollduration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/labelsize"
+        android:textColor="@color/textcolor"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginTop="@dimen/margintop"
+        android:text="@string/srolllength"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labelnotebehaviour"/>
+    <Spinner
+        android:id="@+id/rollduration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/labelsize"
+        android:textColor="@color/white"
+        android:layout_marginStart="@dimen/stdmargin"
+        app:layout_constraintStart_toEndOf="@+id/labelrollduration"
+        app:layout_constraintBottom_toBottomOf="@+id/labelrollduration"/>
+    <CheckBox
+        android:id="@+id/istripletcheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/labelsize"
+        android:textColor="@color/white"
+        android:layout_marginStart="@dimen/margintop"
+        android:layout_marginEnd="@dimen/stdmargin"
+        android:text="@string/striplet"
+        app:layout_constraintStart_toEndOf="@+id/rollduration"
+        app:layout_constraintBottom_toBottomOf="@+id/labelrollduration"/>
+    <TextView
+        android:id="@+id/noteclockdiscalimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginEnd="@dimen/stdmargin"
+        android:layout_marginTop="@dimen/margintop"
+        android:textSize="@dimen/labelsize"
+        android:text="@string/sclockdisclaimer"
+        android:fontFamily="sans-serif-black"
+        android:textColor="@color/textcolor"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/istripletcheck"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

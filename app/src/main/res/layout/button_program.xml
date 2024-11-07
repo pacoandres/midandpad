@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/layout_background"
+    android:textColor="@color/textcolor"
+    tools:context=".ButtonProgramCfg">
+
+    <TextView
+        android:id="@+id/labelbuttonprogram"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginTop="@dimen/margintop"
+        android:textSize="@dimen/labelsize"
+        android:text="@string/sprogram"
+        android:fontFamily="sans-serif-black"
+        android:textColor="@color/textcolor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/buttonprogram"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginTop="@dimen/margintop"
+        android:ems="5"
+        android:inputType="number"
+        android:textAlignment="textEnd"
+        android:textColor="@color/white"
+        android:textSize="@dimen/labelsize"
+        app:layout_constraintStart_toEndOf="@+id/labelbuttonprogram"
+        app:layout_constraintBottom_toBottomOf="@+id/labelbuttonprogram"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
