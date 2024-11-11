@@ -28,15 +28,15 @@ class CalibrationButton: androidx.appcompat.widget.AppCompatButton {
             }*/
 
 
-    var m_press: Float = 0f
-    var m_time: Int = 0
+    var mPress: Float = 0f
+    var mTime: Int = 0
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
 
         when (event?.action){
             MotionEvent.ACTION_DOWN ->{
-                m_time = event.eventTime.toInt()
-                m_press = event.getPressure()
+                mTime = event.eventTime.toInt()
+                mPress = event.getPressure()
             }
             /*MotionEvent.ACTION_MOVE ->{
                 val p: Float = event.getPressure()
@@ -44,10 +44,10 @@ class CalibrationButton: androidx.appcompat.widget.AppCompatButton {
                 Log.v(ConfigParams.module, "Presion mantengo " + p.toString())
             }*/
             MotionEvent.ACTION_UP ->{
-                m_time = (event.eventTime - m_time).toInt()
+                mTime = (event.eventTime - mTime).toInt()
             }
             MotionEvent.ACTION_OUTSIDE ->{
-                m_time = (event.eventTime - m_time).toInt()
+                mTime = (event.eventTime - mTime).toInt()
             }
         }
         return super.onTouchEvent(event) //May force to false
@@ -65,7 +65,7 @@ class CalibrationButton: androidx.appcompat.widget.AppCompatButton {
             if (mPressLabel != null /*&& mTimeLabel != null*/) {
                 val texts = StringBuilder()
                 texts.clear()
-                texts.append(context.getString(mPressPrefix!!), " ", m_press)
+                texts.append(context.getString(mPressPrefix!!), " ", mPress)
                 mPressLabel!!.text = texts
 
                 /*texts.clear()

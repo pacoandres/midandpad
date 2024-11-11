@@ -53,20 +53,18 @@ class CCBar : BoxedVertical, BoxedVertical.OnValuesChangeListener {
             if (mChannel != MidandpadDB.DEFAULT_CHANNEL)
                 channel = mChannel.toUByte()
             if (mControl != PITCH_BEND) {
-                val msg = ubyteArrayOf(
-                    MidiHelper.STATUS_CONTROL_CHANGE or channel,
-                    mControl.toUByte(), points.toUByte()
+                val command: UByte = MidiHelper.STATUS_CONTROL_CHANGE or channel
+                val msg = ubyteArrayOf(mControl.toUByte(), points.toUByte()
                 )
-                MainActivity.mMidi.send(msg.toByteArray())
+                MainActivity.mMidi.send(command, msg.toByteArray())
             }
             else {
                 //Log.v (ConfigParams.MODULE, "BAR: ${points and 0x7F}, ${points ushr 7}")
                 val lsb = (points and 0x7F).toUByte()
                 val msb = (points ushr 7).toUByte()
-                val msg = ubyteArrayOf(
-                    MidiHelper.STATUS_PITCH_BEND or channel,
-                     lsb, msb)
-                MainActivity.mMidi.send(msg.toByteArray())
+                val command: UByte = MidiHelper.STATUS_PITCH_BEND or channel
+                val msg = ubyteArrayOf(lsb, msb)
+                MainActivity.mMidi.send(command, msg.toByteArray())
             }
         }
     }
@@ -90,21 +88,19 @@ class CCBar : BoxedVertical, BoxedVertical.OnValuesChangeListener {
             if (mControl == PITCH_BEND){
                 val channel = if (mChannel != MidandpadDB.DEFAULT_CHANNEL) mChannel.toUByte()
                     else MainActivity.mConfigParams.mDefaultChannel
-                val msg = ubyteArrayOf(
-                    MidiHelper.STATUS_PITCH_BEND or channel,
-                    0U, PITCHCENTERU)
-                MainActivity.mMidi.send(msg.toByteArray())
+                val command: UByte = MidiHelper.STATUS_PITCH_BEND or channel
+                val msg = ubyteArrayOf(0U, PITCHCENTERU)
+                MainActivity.mMidi.send(command, msg.toByteArray())
                 value = PITCHCENTER.toInt()
             }
             else if (mRZ) {
                 val channel = if (mChannel != MidandpadDB.DEFAULT_CHANNEL) mChannel.toUByte()
                     else MainActivity.mConfigParams.mDefaultChannel
 
-                val msg = ubyteArrayOf(
-                    MidiHelper.STATUS_CONTROL_CHANGE or channel,
-                    mControl.toUByte(), mZeroPos.toUByte()
+                val command: UByte = MidiHelper.STATUS_CONTROL_CHANGE or channel
+                val msg = ubyteArrayOf(mControl.toUByte(), mZeroPos.toUByte()
                 )
-                MainActivity.mMidi.send(msg.toByteArray())
+                MainActivity.mMidi.send(command, msg.toByteArray())
                 value = mZeroPos
             }
 

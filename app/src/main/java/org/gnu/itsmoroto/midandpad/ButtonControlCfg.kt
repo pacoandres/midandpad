@@ -6,7 +6,6 @@ import android.widget.AdapterView
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 
 class ButtonControlCfg (context: Context): PropertiesView (context) {
 
@@ -66,7 +65,7 @@ class ButtonControlCfg (context: Context): PropertiesView (context) {
     override fun setProps(btn: EventButton) {
         mButtonControl.text = btn.mNoteNumber.toEditable()
 
-        mTypeSelect.setSelection(btn.getmType().ordinal)
+        mTypeSelect.setSelection(btn.mControlOFF!!.ordinal)
 
         mControlON.text = btn.mONValue.toEditable()
         mControlOFF.text = btn.mOFFValue.toEditable()
@@ -118,13 +117,7 @@ class ButtonControlCfg (context: Context): PropertiesView (context) {
         }
 
         if (msg != ""){
-            AlertDialog.Builder (context, androidx.appcompat.R.style.AlertDialog_AppCompat)
-                .setTitle(R.string.smidivalexceeded)
-                .setMessage(msg)
-                .setPositiveButton(R.string.sok) {_,_->
-                    return@setPositiveButton
-                }
-                .show()
+            showErrorDialog(context, resources.getString(R.string.smidivalexceeded), msg)
             controlwidget!!.requestFocus()
             return false
         }

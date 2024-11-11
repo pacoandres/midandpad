@@ -126,6 +126,7 @@ class BtnConfigScreen(context: Context): ConstraintLayout(context)  {
             return
         val selected: MidiHelper.EventTypes = mTypeSelect.selectedItem as MidiHelper.EventTypes
         mCurrButton!!.mName = mNameText.text.toString()
+        mCurrButton!!.text = mCurrButton!!.mName
         mCurrButton!!.setmType(selected)
         mCurrButton!!.mChannel = mChannelSelect.selectedItemPosition - 1
         if (!mCurrPropsView!!.getProps(mCurrButton!!))

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="titlesize">48sp</dimen>
+    <dimen name="title2size">28sp</dimen>
     <dimen name="labelsize">16sp</dimen>
     <dimen name="midibuttonsize">18sp</dimen>
     <dimen name="barlabelsize">18sp</dimen>

@@ -48,7 +48,8 @@ class MidiHelper(context: Context): DeviceCallback(),
         QUARTER (-1, R.string.squarternote, R.drawable.quarternote),
         EIGHTH (2, R.string.seigthnote, R.drawable.eighthnote),
         SIXTEENTH (4, R.string.ssixteenthnote, R.drawable.sixteenthnote),
-        THIRTY_SECOND (8, R.string.sthridtysecondnote, R.drawable.thirty_secondnote);
+        THIRTY_SECOND (8, R.string.sthridtysecondnote, R.drawable.thirty_secondnote),
+        ROLL (16, R.string.sroll, R.drawable.roll);
 
         override fun getLabelId(): Int {
             return label
@@ -59,8 +60,9 @@ class MidiHelper(context: Context): DeviceCallback(),
 
 
 
-    private val mTickMutex = Mutex () //Can't find thread safety for sending
 
+    private val mTickMutex = Mutex () //Can't find thread safety for sending
+    private var mLastCommand: UByte = 0U
      companion object {
          const val MAXMIDIVALUE: Int = 0x7F
          val MIDINOTES = arrayOf<String>(
@@ -213,7 +215,7 @@ class MidiHelper(context: Context): DeviceCallback(),
     }
     fun openDevice (deviceinfo: MidiDeviceInfo, nportsend:Int, nportrecv: Int){
         closeDevice()
-        if (deviceinfo.inputPortCount < 1 || deviceinfo.outputPortCount < 1)
+        if (deviceinfo.inputPortCount < 1 /*|| deviceinfo.outputPortCount < 1*/)
             return
         if (mMIDIManager == null)
             return
@@ -229,43 +231,22 @@ class MidiHelper(context: Context): DeviceCallback(),
         mNConnect = mDevices.indexOf(device.info)
         mDevice = device
         mOutPort = device.openInputPort(mNPortSend)
-        mInPort = device.openOutputPort(mNPortRecv)
-        //mInPort!!.connect(Receiver (mMain))
-        mInPort!!.connect(object : MidiReceiver (){
-            override fun onSend(msg: ByteArray?, offset: Int, count: Int, timestamp: Long) {
-                if (STATUS_TIMING_CLOCK in msg!!.toUByteArray()){
-                    MainScreen.clockTick()
-                    val m = Message.obtain()
-                    m.obj = MainActivity.AppEvents.MIDICLOCK
-                    mMain.mMsgHandler.sendMessage(m)
+        if (mNPortRecv != -1) {
+            mInPort = device.openOutputPort(mNPortRecv)
+            //mInPort!!.connect(Receiver (mMain))
+            mInPort!!.connect(object : MidiReceiver() {
+                override fun onSend(msg: ByteArray?, offset: Int, count: Int, timestamp: Long) {
+                    if (STATUS_TIMING_CLOCK in msg!!.toUByteArray()) {
+                        MainScreen.clockTick()
+                        val m = Message.obtain()
+                        m.obj = MainActivity.AppEvents.MIDICLOCK
+                        mMain.mMsgHandler.sendMessage(m)
+                    }
+
                 }
-                //Log.i(ConfigParams.MODULE, "MIDI input ${count} bytes long")
 
-            }
-
-            /*override fun send(msg: ByteArray?, offset: Int, count: Int) {
-                super.send(msg, offset, count)
-                if (STATUS_TIMING_CLOCK in msg!!.toUByteArray()){
-                    MainScreen.clockTick()
-                    val m = Message.obtain()
-                    m.obj = MainActivity.AppEvents.MIDICLOCK
-                    mMain.mMsgHandler.sendMessage(m)
-                }
-            }
-
-            override fun send(msg: ByteArray?, offset: Int, count: Int, timestamp: Long) {
-                super.send(msg, offset, count, timestamp)
-                send (msg, offset, count)
-            }*/
-            override fun flush() {
-                super.flush()
-            }
-
-            override fun onFlush() {
-                super.onFlush()
-            }
-
-        })
+            })
+        }
         val m = Message.obtain()
         m.obj = MainActivity.AppEvents.MIDIOPEN
         mMain.mMsgHandler.sendMessage(m)
@@ -275,20 +256,26 @@ class MidiHelper(context: Context): DeviceCallback(),
         return (mDevice != null && mOutPort != null)
     }
 
-    fun send (msg: ByteArray) {
+    fun send (command: UByte, msg: ByteArray) {
+        val message: ArrayList<Byte> = ArrayList<Byte> ()
         if (mOutPort == null) {
             Log.e (ConfigParams.MODULE, "Sending message to no midi device")
             return
         }
+        if (command != mLastCommand){
+            message.add(command.toByte())
+        }
+        message.addAll(msg.toList())
         runBlocking {
             launch {
                 coroutineScope {
                     mTickMutex.withLock {
-                        mOutPort!!.send(msg, 0, msg.size, System.nanoTime())
+                        mOutPort!!.send(message.toByteArray(), 0, message.size, System.nanoTime())
                     }
                 }
             }
         }
+        mLastCommand == command
     }
 
 

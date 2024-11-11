@@ -9,7 +9,7 @@ class ConfigParams (
 ) {
     //Open database and read params
     private var mDatabase: MidandpadDB = MidandpadDB (context)
-
+    private var mMain: MainActivity = context as MainActivity
     companion object {
         const val MODULE: String = "midandpad"
         const val RUN_MODE = 0
@@ -75,6 +75,8 @@ class ConfigParams (
     fun loadPreset (presetId: Long){
         mCurrPreset = presetId
         mDatabase.getPresetParams (mCurrPreset, this)
+        mMain.setPresetNameLabel (mCurrPresetName)
+
     }
     public fun configButtons (buttons: Array<Array<EventButton>>){
         mDatabase.configButtons (mCurrPreset, buttons)
@@ -120,6 +122,9 @@ class ConfigParams (
             Log.v(ConfigParams.MODULE, e.toString())
             return false
         }
+    }
+    fun saveCurrent (){
+        mDatabase.saveCurrent()
     }
 
 }

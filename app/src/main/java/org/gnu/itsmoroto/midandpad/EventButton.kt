@@ -19,9 +19,24 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
 
         @OptIn(ExperimentalUnsignedTypes::class)
         override fun run() {
-            val msg: Array<UByte> = arrayOf(MidiHelper.STATUS_NOTE_ON or mChannel,
-                mNote.toUByte(), mVel.toUByte())
-            MainActivity.mMidi.send(msg.toUByteArray().toByteArray())
+            val command: UByte = MidiHelper.STATUS_NOTE_ON or mChannel
+            val msg: Array<UByte> = arrayOf(mNote.toUByte(), mVel.toUByte())
+            MainActivity.mMidi.send(command, msg.toUByteArray().toByteArray())
+        }
+
+    }
+
+    private class RollNote(note: Int, vel:Int, channel: Int): TimerTask (){
+        private val mNote = note
+        private val mVel = vel
+        private val mChannel = if (channel != -1) channel.toUByte()
+        else MainActivity.mConfigParams.mDefaultChannel
+
+        @OptIn(ExperimentalUnsignedTypes::class)
+        override fun run() {
+            val command: UByte = MidiHelper.STATUS_NOTE_ON or mChannel
+            val msg: Array<UByte> = arrayOf(mNote.toUByte(), mVel.toUByte())
+            MainActivity.mMidi.send(command, msg.toUByteArray().toByteArray())
         }
 
     }
@@ -102,6 +117,7 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
     private val ON = 1
     private val OFF = 0
     private var mFlamTimer: Timer? = null
+    private var mRollTimer: Timer? = null
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         val ret = super.onTouchEvent(event)
@@ -117,7 +133,7 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
                         return@run
                     if (mType == MidiHelper.EventTypes.EVENT_NOTE) {
 
-
+                        mVel = MainActivity.mConfigParams.getVelocity(p)
                         when (mNoteOFF) {
                             NOTEOFFTYPES.NOSENDOFF,
                            /* ->{
@@ -127,7 +143,7 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
                             }*/
                             NOTEOFFTYPES.SENDOFF,
                             NOTEOFFTYPES.FLAM-> {
-                                mVel = MainActivity.mConfigParams.getVelocity(p)
+
                                 if (mNoteOFF == NOTEOFFTYPES.FLAM) {
                                     sendMidi(mVel/2, ON)
                                     mFlamTimer = Timer ()
@@ -139,6 +155,10 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
                                 return true
                             }
                             NOTEOFFTYPES.ROLL -> {
+                                if (mRollNote == MidiHelper.NOTE_TIME.ROLL){
+                                    startRoll ()
+                                    return true
+                                }
                                 mInRoll = true
                                 mClockTicks = mRollNoteTime
                                 return true
@@ -220,7 +240,12 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
                                 return true
                             }
 
-                            NOTEOFFTYPES.ROLL,
+                            NOTEOFFTYPES.ROLL->{
+                                if (mRollTimer != null){
+                                    mRollTimer?.cancel()
+                                    mRollTimer = null
+                                }
+                            }
                             NOTEOFFTYPES.FLAM ->
                                 return true
 
@@ -307,21 +332,24 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
     private fun sendMidi (vel: Int, type: Int){
         val msg = ArrayList<UByte> ()
         val channel = if (mChannel != -1) mChannel.toUByte() else MainActivity.mConfigParams.mDefaultChannel
+        var command: UByte = 0U
         when (mType) {
             MidiHelper.EventTypes.EVENT_NOTE -> {
-                if (type == ON)
-                    msg.add(MidiHelper.STATUS_NOTE_ON or channel.toUByte())
+                command = if (type == ON)
+                    MidiHelper.STATUS_NOTE_ON or channel.toUByte()
                 else
-                    msg.add(MidiHelper.STATUS_NOTE_OFF or channel.toUByte())
+                    MidiHelper.STATUS_NOTE_OFF or channel.toUByte()
+
                 msg.add(mNoteNumber.toUByte())
                 msg.add(vel.toUByte())
             }
 
             MidiHelper.EventTypes.EVENT_CHORD -> {
-                if (type == ON)
-                    msg.add(MidiHelper.STATUS_NOTE_ON or channel.toUByte())
+                command = if (type == ON)
+                    MidiHelper.STATUS_NOTE_ON or channel.toUByte()
                 else
-                    msg.add(MidiHelper.STATUS_NOTE_OFF or channel.toUByte())
+                    MidiHelper.STATUS_NOTE_OFF or channel.toUByte()
+
                 for (note in mChordNotes) {
                     msg.add(note.toUByte())
                     msg.add(vel.toUByte())
@@ -329,11 +357,11 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
             }
 
             MidiHelper.EventTypes.EVENT_PROGRAM -> {
-                msg.add(MidiHelper.STATUS_PROGRAM_CHANGE or channel.toUByte())
+                command = MidiHelper.STATUS_PROGRAM_CHANGE or channel.toUByte()
                 msg.add(mNoteNumber.toUByte())
             }
             MidiHelper.EventTypes.EVENT_CONTROL->{
-                msg.add(MidiHelper.STATUS_CONTROL_CHANGE or channel.toUByte())
+                command = MidiHelper.STATUS_CONTROL_CHANGE or channel.toUByte()
                 msg.add(mNoteNumber.toUByte())
                 if (type == ON)
                     msg.add(mONValue.toUByte())
@@ -341,7 +369,7 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
                     msg.add(mOFFValue.toUByte())
             }
         }
-        MainActivity.mMidi.send(msg.toUByteArray().toByteArray())
+        MainActivity.mMidi.send(command, msg.toUByteArray().toByteArray())
     }
 
 
@@ -358,14 +386,17 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
 
     @OptIn(ExperimentalUnsignedTypes::class)
     fun tick (){
-        if (!mInRoll)
+        if (!mInRoll) {
             return
+        }
 
+        if (mRollTimer != null)
+            return
 
         val msg = ArrayList<UByte> ()
         val channel:UByte = if (mChannel > -1) mChannel.toUByte()
             else MainActivity.mConfigParams.mDefaultChannel
-
+        var command: UByte = 0U
         if (mInRoll) {
             mClockTicks++
             if (mClockTicks < mRollNoteTime)
@@ -373,15 +404,15 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
             mClockTicks = 0
 
             if (mType == MidiHelper.EventTypes.EVENT_NOTE){ //It's roll
-                msg.add(MidiHelper.STATUS_NOTE_ON or channel)
+                command = MidiHelper.STATUS_NOTE_ON or channel
                 msg.add(mNoteNumber.toUByte())
                 msg.add(mVel.toUByte())
-                MainActivity.mMidi.send(msg.toUByteArray().toByteArray())
+                MainActivity.mMidi.send(command, msg.toUByteArray().toByteArray())
                 return
             }
             //It's arpeggio
 
-            msg.add(MidiHelper.STATUS_NOTE_ON or channel)
+            command = MidiHelper.STATUS_NOTE_ON or channel
             if (mChordOFF == CHORDOFFTYPES.ARPEGGIOFF){
                 val note = if (mNotePosition == 0) mChordNotes.last()
                     else mChordNotes[mNotePosition - 1]
@@ -390,7 +421,7 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
             }
             msg.add(mChordNotes[mNotePosition].toUByte())
             msg.add(mVel.toUByte())
-            MainActivity.mMidi.send(msg.toUByteArray().toByteArray())
+            MainActivity.mMidi.send(command, msg.toUByteArray().toByteArray())
             mNotePosition++
             if (mNotePosition >= mChordNotes.count())
                 mNotePosition = 0
@@ -465,6 +496,12 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
                 background = getd (R.drawable.chordbutton_background)
             }
         }
+    }
+
+    private fun startRoll (){
+        mRollTimer = Timer ()
+        mRollTimer!!.schedule(
+            RollNote (mNoteNumber, mVel, mChannel), 0, MAXFLAMTIME)
     }
 
 }

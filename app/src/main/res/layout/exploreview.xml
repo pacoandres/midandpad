@@ -46,7 +46,7 @@
         android:layout_marginEnd="@dimen/stdmargin"
         android:layout_marginStart="@dimen/stdmargin"
         android:text="@string/labelload"
-        android:textColor="@color/textcolor"
+        android:textStyle="bold"
         android:textSize="@dimen/labelsize"
         app:layout_constraintStart_toEndOf="@+id/listend"
         app:layout_constraintEnd_toEndOf="parent"
@@ -62,7 +62,7 @@
         android:layout_marginEnd="@dimen/stdmargin"
         android:layout_marginStart="@dimen/stdmargin"
         android:text="@string/labeldelete"
-        android:textColor="@color/textcolor"
+        android:textStyle="bold"
         android:textSize="@dimen/labelsize"
         app:layout_constraintBottom_toTopOf="@+id/explorebuttonrename"
         app:layout_constraintEnd_toEndOf="parent"
@@ -77,12 +77,42 @@
         android:layout_marginEnd="@dimen/stdmargin"
         android:layout_marginStart="@dimen/stdmargin"
         android:text="@string/labelrename"
-        android:textColor="@color/textcolor"
+        android:textStyle="bold"
+        android:textSize="@dimen/labelsize"
+        app:layout_constraintBottom_toTopOf="@+id/explorebuttonbackup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/listend"
+        app:layout_constraintTop_toBottomOf="@+id/explorebuttondelete" />
+
+    <Button
+        android:id="@+id/explorebuttonbackup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margintop"
+        android:layout_marginEnd="@dimen/stdmargin"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:text="@string/sbackup"
+        android:textStyle="bold"
+        android:textSize="@dimen/labelsize"
+        app:layout_constraintBottom_toTopOf="@+id/explorebuttonrestore"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/listend"
+        app:layout_constraintTop_toBottomOf="@+id/explorebuttonrename" />
+
+    <Button
+        android:id="@+id/explorebuttonrestore"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margintop"
+        android:layout_marginEnd="@dimen/stdmargin"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:text="@string/srestore"
+        android:textStyle="bold"
         android:textSize="@dimen/labelsize"
         app:layout_constraintBottom_toTopOf="@+id/explorebuttoncancel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/listend"
-        app:layout_constraintTop_toBottomOf="@+id/explorebuttondelete" />
+        app:layout_constraintTop_toBottomOf="@+id/explorebuttonbackup" />
 
     <Button
         android:id="@+id/explorebuttoncancel"
@@ -92,12 +122,12 @@
         android:layout_marginEnd="@dimen/stdmargin"
         android:layout_marginStart="@dimen/stdmargin"
         android:text="@string/scancel"
-        android:textColor="@color/textcolor"
+        android:textStyle="bold"
         android:textSize="@dimen/labelsize"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/listend"
-        app:layout_constraintTop_toBottomOf="@+id/explorebuttonrename" />
+        app:layout_constraintTop_toBottomOf="@+id/explorebuttonrestore" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/listend"

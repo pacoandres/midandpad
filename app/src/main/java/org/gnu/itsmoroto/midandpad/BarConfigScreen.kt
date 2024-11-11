@@ -132,7 +132,8 @@ class BarConfigScreen(context: Context): ConstraintLayout(context) {
         if (mCurrentBar == null)
             return
 
-        mCurrentBar!!.mName = mTextName.text.toString()
+        mCurrentBar!!.setName(mTextName.text.toString())
+
         if (mBarType.selectedItem == MidiHelper.BarTypes.BAR_CC)
             mCurrentBar!!.setControl(mTextCC.text.toString().toInt())
         else

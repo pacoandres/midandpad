@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatButton.inflate
 
 interface TypeLabel {
@@ -38,8 +39,10 @@ class TypeLabelAdapter<T:TypeLabel> (context: Context, resid: Int, objects: Arra
     }
 }
 
-class TypeNoteAdapter (context: Context, objects: Array<MidiHelper.NOTE_TIME>):
-        ArrayAdapter<MidiHelper.NOTE_TIME> (context, 0, objects){
+class TypeNoteAdapter : ArrayAdapter<MidiHelper.NOTE_TIME> {
+    constructor(context: Context, objects: Array<MidiHelper.NOTE_TIME>):super (context, 0, objects)
+
+    constructor (context: Context): super (context, 0)
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val image = inflate (context, R.layout.figureview,null) as ImageView
@@ -64,7 +67,30 @@ class ReplaceLabels {
         const val FIELDLABEL = "[field]"
         const val VALUELABEL = "[value]"
         const val PRESETNAMELABEL = "[presetname]"
+        const val TABLE = "[table]"
     }
+}
+
+fun showErrorDialog (context: Context, title: String, message: String){
+    AlertDialog.Builder (context, androidx.appcompat.R.style.AlertDialog_AppCompat)
+        .setTitle(title)
+        .setMessage(message)
+        .setIcon(android.R.drawable.ic_dialog_alert)
+        .setPositiveButton(R.string.sok) {_,_->
+            return@setPositiveButton
+        }
+        .show()
+}
+
+fun showErrorDialog (context: Context, title: String, message: String, e: Exception){
+    AlertDialog.Builder (context, androidx.appcompat.R.style.AlertDialog_AppCompat)
+        .setTitle(title)
+        .setMessage(message + "\n" + e.message)
+        .setIcon(android.R.drawable.ic_dialog_alert)
+        .setPositiveButton(R.string.sok) {_,_->
+            return@setPositiveButton
+        }
+        .show()
 }
 
 

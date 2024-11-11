@@ -364,8 +364,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="app_title" />
-                            <entry key="sourceFile" value="$PROJECT_DIR$/images/app_title.svg" />
+                            <entry key="outputName" value="roll" />
+                            <entry key="sourceFile" value="$PROJECT_DIR$/images/notes/roll.svg" />
                           </map>
                         </option>
                       </PersistentState>

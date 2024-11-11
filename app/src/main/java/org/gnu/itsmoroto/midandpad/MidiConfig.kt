@@ -3,6 +3,7 @@ package org.gnu.itsmoroto.midandpad
 import android.content.Context
 import android.media.midi.MidiDeviceInfo
 import android.media.midi.MidiDeviceInfo.PortInfo
+import android.os.Message
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -144,11 +145,32 @@ class MidiConfig (context: Context):ConstraintLayout (context) {
         val selporti = if (mSelectInPort.selectedItem != null) mSelectInPort.selectedItem as Int
             else -1
         val defchannel = mSelectChannel.selectedItem as Int
-        if (selporto != -1 && seldevice != null && defchannel != -1 &&
-            selporti != -1
+
+        val msg = Message.obtain()
+        if (selporto != -1 && seldevice != null && defchannel != -1
         ) {
-            MainActivity.mMidi.openDevice(seldevice, selporto, selporti)
-            MainActivity.mConfigParams.mDefaultChannel = (defchannel - 1).toUByte()
+            if (selporti == -1) {
+                AlertDialog.Builder(context, androidx.appcompat.R.style.AlertDialog_AppCompat)
+                    .setTitle(R.string.snomidiintitle)
+                    .setMessage(R.string.snomidiinmsg)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setPositiveButton(R.string.sok) { _, _ ->
+                        MainActivity.mMidi.openDevice(seldevice, selporto, selporti)
+                        MainActivity.mConfigParams.mDefaultChannel = (defchannel - 1).toUByte()
+                        msg.obj = MainActivity.AppEvents.ONMIDIOPEN
+                        (context as MainActivity).mMsgHandler.sendMessage(msg)
+                    }
+                    .setNegativeButton(R.string.scancel) { _, _ ->
+                        return@setNegativeButton
+                    }
+                    .show()
+            }
+            else {
+                MainActivity.mMidi.openDevice(seldevice, selporto, selporti)
+                MainActivity.mConfigParams.mDefaultChannel = (defchannel - 1).toUByte()
+                msg.obj = MainActivity.AppEvents.ONMIDIOPEN
+                (context as MainActivity).mMsgHandler.sendMessage(msg)
+            }
         } else {
             AlertDialog.Builder(context, androidx.appcompat.R.style.AlertDialog_AppCompat)
                 .setTitle("Error")
@@ -158,8 +180,8 @@ class MidiConfig (context: Context):ConstraintLayout (context) {
                 }
                 .setIcon(android.R.drawable.stat_notify_error)
                 .show()
+            return
         }
-        onCancelClick()
     }
 
     override fun onVisibilityChanged(changedView: View, visibility: Int) {

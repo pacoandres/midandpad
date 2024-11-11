@@ -1,39 +1,39 @@
-/***
- *TODO:
-
- */
-
-
 package org.gnu.itsmoroto.midandpad
 
 
+import android.content.ContentResolver
+import android.content.Context
+import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
 import android.os.Handler
-import android.os.Looper
 import android.os.Message
 import android.util.Log
 
 import android.view.View
 import android.widget.FrameLayout
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import androidx.constraintlayout.widget.ConstraintLayout
-import kotlinx.coroutines.coroutineScope
+import androidx.core.app.ActivityCompat
+import androidx.core.net.toFile
+import androidx.documentfile.provider.DocumentFile
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.Timer
-import java.util.TimerTask
 import kotlin.concurrent.fixedRateTimer
 import kotlin.system.exitProcess
-import androidx.fragment.app.FragmentTransaction
-import androidx.fragment.app.FragmentActivity
 import kotlinx.coroutines.Runnable
 
 class MainActivity : AppCompatActivity(), Runnable {
+
 
     companion object {
         lateinit var mConfigParams: ConfigParams
@@ -41,12 +41,15 @@ class MainActivity : AppCompatActivity(), Runnable {
     }
     enum class AppEvents {
         MIDICHANGES,
+        ONMIDIOPEN,
         MIDIOPEN,
         MIDICLOSE,
         MIDICLOCK,
         TIMERCLOCK,
         START,
-        DEBUG
+        DEBUG,
+        DOBACKUP,
+        RESTOREFILE
     }
     private var mPreviousView: View? = null
     lateinit var mMsgHandler:Handler
@@ -63,6 +66,7 @@ class MainActivity : AppCompatActivity(), Runnable {
     private val CLOCKTIMERPERIOD:Long = 500L
 
     private lateinit var mSplashScreen: Splash
+
 
     private lateinit var mClockTimer: Timer
     private val mBackCallback = object : OnBackPressedCallback(enabled = true) { //Enabled. False to disable
@@ -108,6 +112,30 @@ class MainActivity : AppCompatActivity(), Runnable {
                 AppEvents.DEBUG->{
                     Log.i(ConfigParams.MODULE, "Debug loop message")
                 }
+                AppEvents.DOBACKUP->{
+                    if (mBackupDirectory != null) {
+
+                        Log.i(ConfigParams.MODULE, "Directory choosed ${mBackupDirectory}")
+                        BackupDatabase.BackupToDir(this,
+                            mBackupDirectory!!,
+                            applicationInfo.dataDir/* + "/databases"*/)
+                        mBackupDirectory = null
+                    }
+                    else
+                        Log.i (ConfigParams.MODULE, "No backupdir")
+                }
+                AppEvents.RESTOREFILE ->{
+                    if (mRestoreFile != null) {
+                        BackupDatabase.RestoreDatabase (this, mRestoreFile!!, cacheDir,
+                            applicationInfo.dataDir)
+                        mRestoreFile = null
+                        mExploreScreen.updateData()
+                    }
+                }
+                AppEvents.ONMIDIOPEN -> {
+                    //Comes from midiconfig
+                    goBack()
+                }
                 else ->
                     return@Callback false
             }
@@ -127,6 +155,7 @@ class MainActivity : AppCompatActivity(), Runnable {
         mMidiConfig = MidiConfig(this)
         mMidiConfig.updateChannelPPQ()
         onBackPressedDispatcher.addCallback(this, mBackCallback)
+        mMainScreen.setPresetName(mConfigParams.mCurrPresetName)
         changeView (mMainScreen)
     }
     private fun initialize (){
@@ -169,6 +198,7 @@ class MainActivity : AppCompatActivity(), Runnable {
                 .show()
             return
         }
+        checkPermissions()
         setHandler()
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
 
@@ -200,12 +230,31 @@ class MainActivity : AppCompatActivity(), Runnable {
         mCurrentView = v
     }
 
+    private fun exitMidAndPad (){
+        mConfigParams.saveCurrent()
+        mMidi.closeDevice()
+        exitProcess(0)
+    }
+
+    private fun exitSave (){
+        AlertDialog.Builder (this, androidx.appcompat.R.style.AlertDialog_AppCompat)
+            .setTitle(R.string.sexitsavetitle)
+            .setMessage(R.string.sexitsavemessage)
+            .setIcon(android.R.drawable.ic_dialog_alert)
+            .setPositiveButton(R.string.syes) {_,_->
+                mMainScreen.onSaveClick()
+                exitMidAndPad()
+            }
+            .setNegativeButton(R.string.sno){_,_->
+                exitMidAndPad()
+            }
+            .show()
+    }
     fun goBack (){
         if (mPreviousView != null)
             changeView(mPreviousView)
         else {
-            mMidi.closeDevice()
-            exitProcess(0)
+            exitSave ()
         }
     }
 
@@ -213,6 +262,10 @@ class MainActivity : AppCompatActivity(), Runnable {
         mMidiConfig.update()
     }
 
+    fun setPresetNameLabel (name: String){
+        if (this::mMainScreen.isInitialized)
+            mMainScreen.setPresetName(name)
+    }
     fun configControls (){
         mMainScreen.configControls()
     }
@@ -230,5 +283,93 @@ class MainActivity : AppCompatActivity(), Runnable {
 
     override fun run() {
         initialize()
+    }
+
+
+    /**
+     * For backup
+     */
+    private var mBackupDirectory: DocumentFile? = null
+    private var mRestoreFile: DocumentFile? = null
+    private val mBackupLauncher: ActivityResultLauncher<Intent> =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if  (result.resultCode == RESULT_OK &&
+                result.data != null && result.data!!.data != null) {
+                val uri = result.data!!.data
+                mBackupDirectory = DocumentFile.fromTreeUri(this, uri!!)
+                val mes = Message.obtain()
+                mes.obj = AppEvents.DOBACKUP
+                mMsgHandler.sendMessage(mes)
+            }
+        }
+
+    private val mRestoreLauncher: ActivityResultLauncher<Intent> =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if  (result.resultCode == RESULT_OK &&
+                result.data != null) {
+                val uri = result.data!!.data!!
+                mRestoreFile = DocumentFile.fromSingleUri(this, uri)
+                val mes = Message.obtain()
+                mes.obj = AppEvents.RESTOREFILE
+                mMsgHandler.sendMessage(mes)
+            }
+        }
+
+    fun doBackup () {
+        val chooser = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
+        mBackupLauncher.launch(chooser)
+
+    }
+
+    fun doRestore () {
+        val chooser = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "application/zip"
+        }
+        mRestoreLauncher.launch(Intent.createChooser(chooser, "Seleccionar"))
+    }
+
+    val PERMISSIONSCODE = 100
+    val mPermissionsArray = arrayOf(
+        android.Manifest.permission.READ_EXTERNAL_STORAGE,
+        android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+    )
+    private fun checkPermissions (){
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED ||
+                checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED
+            ) {
+
+                ActivityCompat.requestPermissions(this, mPermissionsArray, PERMISSIONSCODE)
+            }
+        }
+        /*else {
+            if (!Environment.isExternalStorageManager())
+                noBackup()
+        }*/
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String?>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == PERMISSIONSCODE){
+            if (grantResults.count() == mPermissionsArray.count()) {
+                for (p in grantResults) {
+                    if (p != PackageManager.PERMISSION_GRANTED)
+                        noBackup()
+                }
+            }
+            else
+                noBackup ()
+        }
+    }
+    private fun noBackup (){
+        showErrorDialog(this, getString(R.string.snobackuptitle),
+            getString(R.string.snobackupmsg))
     }
 }

@@ -45,7 +45,8 @@ class ButtonChordCfg (context: Context) : PropertiesView (context) {
 
         mLabelChordTime = findViewById(R.id.labelchordtime)
         mChordTime = findViewById(R.id.chordtime)
-        mChordTimeAdapter = TypeNoteAdapter (context, MidiHelper.NOTE_TIME.entries.toTypedArray())
+        mChordTimeAdapter = TypeNoteAdapter (context)
+        initNoteTimeAdapter()
         mChordTimeAdapter.setDropDownViewResource(R.layout.dropdowncomboview)
         mChordTime.adapter = mChordTimeAdapter
 
@@ -67,6 +68,14 @@ class ButtonChordCfg (context: Context) : PropertiesView (context) {
         mButtonPlus = findViewById(R.id.buttonplus)
         mButtonPlus.setOnClickListener (::newNote)
         mDisclaimer = findViewById(R.id.chorddiscalimer)
+    }
+
+    fun initNoteTimeAdapter () { //No roll in apeggio.
+        for (t in MidiHelper.NOTE_TIME.entries){
+            if (t == MidiHelper.NOTE_TIME.ROLL)
+                continue
+            mChordTimeAdapter.add(t)
+        }
     }
 
     fun newNote (v: View?): NoteRow{
@@ -119,7 +128,11 @@ class ButtonChordCfg (context: Context) : PropertiesView (context) {
         if (chordtype in setOf(EventButton.CHORDOFFTYPES.ARPEGGIOFF,
             EventButton.CHORDOFFTYPES.ARPEGGIONOFF)){
             showTime(VISIBLE)
-            mChordTime.setSelection(btn.mRollNote.ordinal)
+            if (btn.mRollNote != MidiHelper.NOTE_TIME.ROLL)
+                mChordTime.setSelection(btn.mRollNote.ordinal)
+            else //Comes from ROLL, we have no roll
+                mChordTime.setSelection(MidiHelper.NOTE_TIME.QUARTER.ordinal)
+
             mIsTriplet.isChecked = btn.getIsTriplet()
         }
         else {

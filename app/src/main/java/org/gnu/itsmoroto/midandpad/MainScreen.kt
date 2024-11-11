@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -26,7 +27,7 @@ class MainScreen (context: Context): ConstraintLayout(context) {
     private val mHaveMIDIcheck: CheckBox
     private val mHaveClockCheck:CheckBox
 
-
+    private val mCurrPresetLabel: TextView
 
     companion object{
         public const val BUTTONROWS = 3
@@ -86,6 +87,7 @@ class MainScreen (context: Context): ConstraintLayout(context) {
         mHaveClockCheck = findViewById(R.id.haveclock)
         mHaveClockCheck.isChecked = false
 
+        mCurrPresetLabel = findViewById(R.id.labelpreset)
 
         mEventButtons = arrayOf(
             arrayOf(findViewById(R.id.button11) as EventButton,
@@ -150,7 +152,13 @@ class MainScreen (context: Context): ConstraintLayout(context) {
         (context as MainActivity).changeView(exploreScreen)
     }
 
-    private fun onSaveClick (){
+    fun onSaveClick (){
+        if (MainActivity.mConfigParams.mCurrPreset == 1L){
+                /*Toast.makeText(context, resources.getString(R.string.ssavefactory),
+                    ConfigParams.TOASTLENGTH).show()*/
+            showErrorDialog(context, "Error", resources.getString(R.string.ssavefactory))
+                return;
+        }
         MainActivity.mConfigParams.savePreset(mEventButtons, mControlBars)
         Toast.makeText(context, resources.getString(R.string.spresetsaved)
             .replace(ReplaceLabels.PRESETNAMELABEL, MainActivity.mConfigParams.mCurrPresetName),
@@ -175,17 +183,13 @@ class MainScreen (context: Context): ConstraintLayout(context) {
                 if (MainActivity.mConfigParams.checkPresetName(newname)){
                     val msg = context.resources.getString(R.string.spresetnameexists)
                         .replace(ReplaceLabels.PRESETNAMELABEL, newname)
-
-                    AlertDialog.Builder (context, androidx.appcompat.R.style.AlertDialog_AppCompat)
-                        .setTitle(R.string.sduplicatedname)
-                        .setMessage(msg)
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .setPositiveButton(R.string.sok, null)
-                        .show()
+                    showErrorDialog(context, resources.getString(R.string.sduplicatedname),
+                        msg)
                     dialog.dismiss()
                     return@setPositiveButton
                 }
                 MainActivity.mConfigParams.savePresetAs(newname, mEventButtons, mControlBars)
+                (context as MainActivity).mExploreScreen.updateData()
                 dialog.dismiss()
                 Toast.makeText(context, resources.getString(R.string.spresetsaved)
                     .replace(ReplaceLabels.PRESETNAMELABEL, newname),
@@ -208,5 +212,8 @@ class MainScreen (context: Context): ConstraintLayout(context) {
         mHaveClockCheck.isChecked = status
     }
 
+    fun setPresetName (name: String){
+        mCurrPresetLabel.text = "${resources.getString(R.string.spreset)}: ${name}"
+    }
 
 }

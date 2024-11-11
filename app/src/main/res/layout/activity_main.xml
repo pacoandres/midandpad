@@ -347,7 +347,7 @@
         android:text="TextView"
         android:inputType="none"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/labelpreset"
         app:layout_constraintEnd_toStartOf="@+id/label4"
         app:layout_constraintStart_toEndOf="@+id/buttonend"
         app:layout_constraintTop_toBottomOf="@+id/ctrl3" />
@@ -362,10 +362,26 @@
         android:text="TextView"
         android:inputType="none"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/labelpreset"
         app:layout_constraintEnd_toStartOf="@+id/appbar"
         app:layout_constraintStart_toEndOf="@+id/label3"
         app:layout_constraintTop_toBottomOf="@+id/ctrl4" />
+    <TextView
+        android:id="@+id/labelpreset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/stdmargin"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginEnd="@dimen/stdmargin"
+        android:textSize="@dimen/barlabelsize"
+        android:text="TextView"
+        android:inputType="none"
+        android:textColor="@color/textcolor"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/appbar"
+        app:layout_constraintStart_toEndOf="@+id/buttonend"
+        app:layout_constraintTop_toBottomOf="@+id/label3" />
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
 

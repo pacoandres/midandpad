@@ -21,6 +21,8 @@ class ExploreScreen(context: Context): ConstraintLayout(context)  {
     private val mDeleteButton: Button
     private val mRenameButton: Button
     private val mCancelButton: Button
+    private val mBackupButton: Button
+    private val mRestoreButton: Button
 
     private var mSelectedIndex: Int = -1
     private var mSelectedView:View? = null
@@ -50,7 +52,15 @@ class ExploreScreen(context: Context): ConstraintLayout(context)  {
             mSelectedView = view
         }
 
+        mBackupButton = findViewById(R.id.explorebuttonbackup)
+        mBackupButton.setOnClickListener { _:View ->
+            (context as MainActivity).doBackup()
+        }
 
+        mRestoreButton = findViewById(R.id.explorebuttonrestore)
+        mRestoreButton.setOnClickListener { _:View ->
+            (context as MainActivity).doRestore()
+        }
 
         mCancelButton = findViewById(R.id.explorebuttoncancel)
         mCancelButton.setOnClickListener { _:View ->
@@ -85,17 +95,25 @@ class ExploreScreen(context: Context): ConstraintLayout(context)  {
         if (mSelectedIndex == -1)
             return
         val sel: PresetItem = mList.getItemAtPosition(mSelectedIndex) as PresetItem
+        if (sel.id == 1L){
+            Toast.makeText(context, resources.getString(R.string.sdelfactory),
+                ConfigParams.TOASTLENGTH).show()
+            return;
+        }
         val dlgTitle = context.resources.getString(R.string.sdeletepreset) + " " +
                 sel.name + "?"
-        if (sel.id == MainActivity.mConfigParams.mCurrPreset)
+        if (sel.id == MainActivity.mConfigParams.mCurrPreset) {
+            Toast.makeText(context, resources.getString(R.string.sdelcurrent),
+                ConfigParams.TOASTLENGTH).show()
             return;
+        }
         AlertDialog.Builder (context, androidx.appcompat.R.style.AlertDialog_AppCompat)
             .setTitle(dlgTitle)
             .setMessage(dlgTitle)
             .setPositiveButton(R.string.sok) {_,_->
+                mList.setItemChecked(mSelectedIndex, false)
                 MainActivity.mConfigParams.deletePreset (sel.id)
                 mData.remove(sel)
-                mList.clearChoices()
                 updateData()
             }
             .setNegativeButton(R.string.scancel){_,_->
@@ -110,6 +128,11 @@ class ExploreScreen(context: Context): ConstraintLayout(context)  {
         val sel: PresetItem = mList.getItemAtPosition(mSelectedIndex) as PresetItem
         val dlgTitle = context.resources.getString(R.string.srenamepreset) + " " +
                 sel.name
+        if (sel.id == 1L){
+            Toast.makeText(context, resources.getString(R.string.srenamefactory),
+                ConfigParams.TOASTLENGTH).show()
+            return;
+        }
         //val textlayout: TextInputLayout = TextInputLayout(context)
         val textinput = EditText (context)
         //textlayout.addView(textinput)
@@ -126,13 +149,8 @@ class ExploreScreen(context: Context): ConstraintLayout(context)  {
                 if (MainActivity.mConfigParams.checkPresetName(newname)){
                     val msg = context.resources.getString(R.string.spresetnameexists)
                         .replace(ReplaceLabels.PRESETNAMELABEL, newname)
-
-                    AlertDialog.Builder (context, androidx.appcompat.R.style.AlertDialog_AppCompat)
-                        .setTitle(R.string.sduplicatedname)
-                        .setMessage(msg)
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .setPositiveButton(R.string.sok, null)
-                        .show()
+                    showErrorDialog(context, resources.getString(R.string.sduplicatedname),
+                        msg)
                     dialog.dismiss()
                     return@setPositiveButton
                 }
@@ -152,4 +170,5 @@ class ExploreScreen(context: Context): ConstraintLayout(context)  {
             return
         updateData()
     }
+
 }

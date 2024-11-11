@@ -5,7 +5,6 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 
 class TouchCalibration (context: Context): ConstraintLayout(context) {
@@ -98,26 +97,24 @@ class TouchCalibration (context: Context): ConstraintLayout(context) {
 
     private fun acceptChanges (){
         val cf = MainActivity.mConfigParams
+        if (!mIsFixed.isChecked && (mMaxButton.mPress == mMinButton.mPress ))
+            mIsFixed.isChecked = true
+        
         cf.mIsFixedVelocity = mIsFixed.isChecked
         val velocity = mFixedValue.text.toString().toInt()
         if (velocity > MidiHelper.MAXMIDIVALUE){
             val msg = context.getString(R.string.svalexceedmessage).replace(ReplaceLabels.FIELDLABEL,
                 context.getString(R.string.svelocity)).replace(ReplaceLabels.VALUELABEL,
                     MidiHelper.MAXMIDIVALUE.toString())
-
-            AlertDialog.Builder (context, androidx.appcompat.R.style.AlertDialog_AppCompat)
-                .setTitle(R.string.smidivalexceeded)
-                .setMessage(msg)
-                .setPositiveButton(R.string.sok) {_,_->
-                    return@setPositiveButton
-                }
-                .show()
+            showErrorDialog(context, resources.getString(R.string.smidivalexceeded),
+                msg)
             mFixedValue.requestFocus()
             return
         }
         cf.mFixedVelocity = velocity
-        cf.mMinPress = mMinButton.m_press
-        cf.mMaxPress = mMaxButton.m_press
+        cf.mMinPress = mMinButton.mPress
+        cf.mMaxPress = mMaxButton.mPress
+
         /*cf.mMinPressTime = mMinButton.m_time
         cf.mMaxPressTime = mMaxButton.m_time*/
         cf.computePressureparams()

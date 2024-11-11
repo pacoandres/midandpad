@@ -10,13 +10,12 @@ import android.util.Log
 class MidandpadDB//else throw exception
     (context: Context?) : SQLiteOpenHelper(
     context, "midandpaddb", null,
-    org.gnu.itsmoroto.midandpad.BuildConfig.dbversion
+    BuildConfig.dbversion
 ) {
 
-    private lateinit var m_context: Context
-    private val m_name = "midandpaddb"
-    private val m_factory = null
-    private val m_version = org.gnu.itsmoroto.midandpad.BuildConfig.dbversion
+    private lateinit var mContext: Context
+    private val mName = "midandpaddb"
+    private val mVersion = BuildConfig.dbversion
 
     companion object {
         val DEFAULT_CHANNEL = -1
@@ -25,7 +24,7 @@ class MidandpadDB//else throw exception
 
     init {
         if (context != null)
-            m_context = context
+            mContext = context
     }
 
 
@@ -83,7 +82,7 @@ class MidandpadDB//else throw exception
         if (db == null)
             return;
         //dbversion is configured in build.gradle.kts(:app)
-        if (oldVersion < org.gnu.itsmoroto.midandpad.BuildConfig.dbversion){
+        if (oldVersion < mVersion){
             //Do stuff
         }
     }
@@ -91,6 +90,7 @@ class MidandpadDB//else throw exception
         db.beginTransaction()
         val values = ContentValues ()
         try {
+            values.put("presetId", 1)
             values.put("name", "default")
             values.put("minpress", 0)
             values.put("maxpress", 1)
@@ -112,8 +112,11 @@ class MidandpadDB//else throw exception
             db.setTransactionSuccessful()
         }
         catch (e: Exception){
-            Log.v(ConfigParams.MODULE, "Exception populating default data")
-            Log.v(ConfigParams.MODULE, e.toString())
+            /*Log.v(ConfigParams.MODULE, "Exception populating default data")
+            Log.v(ConfigParams.MODULE, e.toString())*/
+            val msg = mContext.getString(R.string.sdbgenericerror)
+            showErrorDialog(mContext, mContext.getString(R.string.sdatabaseerror),
+                msg, e)
         }
         finally {
             db.endTransaction()
@@ -161,6 +164,10 @@ class MidandpadDB//else throw exception
             db.insertOrThrow("Bars", null, values)
         }
         catch (e: Exception){
+            val msg = mContext.getString(R.string.sinserterror).replace(
+                ReplaceLabels.TABLE, "Bars")
+            showErrorDialog(mContext, mContext.getString(R.string.sdatabaseerror),
+                msg, e)
             throw e
         }
     }
@@ -251,6 +258,10 @@ class MidandpadDB//else throw exception
             db.insertOrThrow("Buttons", null, values)
         }
         catch (e: Exception){
+            val msg = mContext.getString(R.string.sinserterror).replace(
+                ReplaceLabels.TABLE, "Buttons")
+            showErrorDialog(mContext, mContext.getString(R.string.sdatabaseerror),
+                msg, e)
             throw e
         }
     }
@@ -359,17 +370,25 @@ class MidandpadDB//else throw exception
         val db = writableDatabase
         db.beginTransaction()
         try {
-            if (db.delete("Presets", "presetId=?", arrayOf(id.toString())) == 0){
-                throw SQLiteException ("Error in delete: preset $id not found")
+            if (db.delete("Presets", "presetId=?", arrayOf(id.toString())) != 0) {
+                db.delete("Buttons", "presetId=?", arrayOf(id.toString()))
+                db.delete("Bars", "presetId=?", arrayOf(id.toString()))
+                db.setTransactionSuccessful()
+            }else {
+                val msg = mContext.getString(R.string.sdeleteerror).replace(
+                    ReplaceLabels.TABLE, "Presets") + "\n" +
+                        "Error in delete: preset ${id} not found"
+                showErrorDialog(mContext, mContext.getString(R.string.sdatabaseerror),
+                    msg)
             }
 
-            db.delete("Buttons", "presetId=?", arrayOf(id.toString()))
-            db.delete("Bars", "presetId=?", arrayOf(id.toString()))
-            db.setTransactionSuccessful()
+
         }
         catch (e: Exception){
-            Log.v(ConfigParams.MODULE, "Exception deleting preset")
-            Log.v(ConfigParams.MODULE, e.toString())
+            val msg = mContext.getString(R.string.sdeleteerror).replace(
+                ReplaceLabels.TABLE, "Presets, Buttons, Bars")
+            showErrorDialog(mContext, mContext.getString(R.string.sdatabaseerror),
+                msg, e)
         }
         finally {
             db.endTransaction()
@@ -383,14 +402,23 @@ class MidandpadDB//else throw exception
         newvalues.put("name", newname)
         db.beginTransaction()
         try {
-            if (db.update("Presets", newvalues,"presetId=?", arrayOf(id.toString())) == 0){
-                throw SQLiteException ("Error in update: preset $id not found")
+            if (db.update("Presets", newvalues,"presetId=?", arrayOf(id.toString())) != 0) {
+                db.setTransactionSuccessful()
             }
-            db.setTransactionSuccessful()
+            else {
+                val msg = mContext.getString(R.string.supdateerror).replace(
+                    ReplaceLabels.TABLE, "Presets") + "\n" +
+                        "Error in update: preset ${id} not found"
+                showErrorDialog(mContext, mContext.getString(R.string.sdatabaseerror),
+                    msg)
+
+            }
         }
         catch (e: Exception){
-            Log.v(ConfigParams.MODULE, "Exception renaming preset")
-            Log.v(ConfigParams.MODULE, e.toString())
+            val msg = mContext.getString(R.string.supdateerror).replace(
+                ReplaceLabels.TABLE, "Presets")
+            showErrorDialog(mContext, mContext.getString(R.string.sdatabaseerror),
+                msg, e)
         }
         finally {
             db.endTransaction()
@@ -424,15 +452,25 @@ class MidandpadDB//else throw exception
             newpresetvalues.put("defppq", cf.mPPQ)
             if (db.update("Presets", newpresetvalues, "presetId=?",
                 arrayOf(id.toString())
-            ) == 0){
-                throw SQLiteException ("Error in saving: preset $id not found")
+            ) != 0) {
+                updateButtons(db, id, buttons)
+                updateBars(db, id, bars)
+                db.setTransactionSuccessful()
             }
-            updateButtons (db, id, buttons)
-            updateBars (db, id, bars)
-            db.setTransactionSuccessful()
+            else {
+                val msg = mContext.getString(R.string.supdateerror).replace(
+                    ReplaceLabels.TABLE, "Presets") + "\n" +
+                        "Error in update: preset ${id} not found"
+                showErrorDialog(mContext, mContext.getString(R.string.sdatabaseerror),
+                    msg)
+            }
+
         }
         catch (e: Exception){
-            throw e
+            val msg = mContext.getString(R.string.supdateerror).replace(
+                ReplaceLabels.TABLE, "Presets")
+            showErrorDialog(mContext, mContext.getString(R.string.sdatabaseerror),
+                msg, e)
         }
         finally {
             db.endTransaction()
@@ -516,9 +554,19 @@ class MidandpadDB//else throw exception
                 ret = presetid
                 db.setTransactionSuccessful()
             }
+            else {
+                val msg = mContext.getString(R.string.sinserterror).replace(
+                    ReplaceLabels.TABLE, "Presets") + "\n" +
+                        "Unknown error inserting in Presets"
+                showErrorDialog(mContext, mContext.getString(R.string.sdatabaseerror),
+                    msg)
+            }
         }
         catch (e: Exception){
-            throw e
+            val msg = mContext.getString(R.string.sinserterror).replace(
+                ReplaceLabels.TABLE, "Presets")
+            showErrorDialog(mContext, mContext.getString(R.string.sdatabaseerror),
+                msg, e)
         }
         finally {
             db.endTransaction()
@@ -574,6 +622,32 @@ class MidandpadDB//else throw exception
         }
         catch (e: Exception){
             throw e
+        }
+    }
+
+    fun saveCurrent (){
+        val db = writableDatabase
+        val cf = MainActivity.mConfigParams
+        val values = ContentValues ()
+        try {
+            db.beginTransaction()
+            values.put("presetId", cf.mCurrPreset)
+            if (db.update("Current", values, "id = 1", null) == 0
+            ){
+                showErrorDialog(mContext, mContext.getString(R.string.sdatabaseerror),
+                    mContext.getString(R.string.supdateerror)
+                        .replace(ReplaceLabels.TABLE, "Current"))
+            }
+            db.setTransactionSuccessful()
+        }
+        catch (e: Exception){
+            val msg = mContext.getString(R.string.supdateerror)
+                .replace(ReplaceLabels.TABLE, "Current")
+            showErrorDialog(mContext, mContext.getString(R.string.sdatabaseerror),
+                msg, e)
+        }
+        finally {
+            db.endTransaction()
         }
     }
 }

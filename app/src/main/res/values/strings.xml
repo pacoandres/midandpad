@@ -15,7 +15,7 @@
     <string name="smaxvelocity" translatable="false">Max. Velocity</string>
     <string name="presetlist">Presets list</string>
     <string name="labelload">Load</string>
-    <string name="labeldelete">Detele</string>
+    <string name="labeldelete">Delete</string>
     <string name="labelrename">Rename</string>
     <string name="sok">OK</string>
     <string name="sdeletepreset">Delete preset</string>
@@ -36,7 +36,7 @@
     <string name="sbarzeroval">Zero value</string>
     <string name="svalueoff">Off value</string>
     <string name="svalueon">On value</string>
-    <string name="serrorfulfillment">All fields are mandatory</string>
+    <string name="serrorfulfillment">Device, input port and default channel are mandatory.</string>
     <string name="snomidi">This device does not support MIDI. Exiting.</string>
     <string name="sroll" translatable="false">Roll</string>
     <string name="sflam" translatable="false">Flam</string>
@@ -75,4 +75,28 @@
     <string name="spresetloaded">Preset [presetname] loaded</string>
     <string name="spresetsaved">Preset [presetname] saved</string>
     <string name="sbend" translatable="false">Pitchbend</string>
+    <string name="sbackup" translatable="false">Backup</string>
+    <string name="srestore">Restore</string>
+    <string name="snobackuptitle">No write permissions</string>
+    <string name="snobackupmsg">You can\'t do backups without write permissions</string>
+    <string name="sexitsavetitle">Save changes?</string>
+    <string name="sexitsavemessage">Save current preset changes before exit?</string>
+    <string name="syes">Yes</string>
+    <string name="sno">No</string>
+    <string name="snomidiintitle">MIDI limitation</string>
+    <string name="snomidiinmsg">The application can\'t receive MIDI clock messages with the selected device.\nSome pad types, like roll or arpeggio, couldn\'t work as expected.</string>
+    <string name="sdatabaseerror">Database error</string>
+    <string name="sinserterror">Error inserting in table [table]</string>
+    <string name="supdateerror">Error updating table [table]</string>
+    <string name="sdbgenericerror">Error accesing database</string>
+    <string name="sdeleteerror">Error deleting in table [table]</string>
+    <string name="sbackuperror">Error in backup</string>
+    <string name="nodatabasedir">Can\'t find databases dir</string>
+    <string name="serrorziping">Error compressing database</string>
+    <string name="srestoreerror">Error in restore</string>
+    <string name="sdelcurrent">Can\'t delete current preset</string>
+    <string name="sdelfactory">Can\'t delete factory preset</string>
+    <string name="srenamefactory">Can\'t rename factory preset</string>
+    <string name="ssavefactory">Can\'t write fractory preset. Choose \"Save As\"</string>
+    <string name="spreset" translatable="false">Preset</string>
 </resources>

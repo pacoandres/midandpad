@@ -24,14 +24,7 @@ class ButtonProgramCfg (context: Context) : PropertiesView (context) {
             val msg = context.getString(R.string.svalexceedmessage).replace(ReplaceLabels.FIELDLABEL,
                 context.getString(R.string.sprogram)).replace(ReplaceLabels.VALUELABEL,
                 MidiHelper.MAXMIDIVALUE.toString())
-
-            AlertDialog.Builder (context, androidx.appcompat.R.style.AlertDialog_AppCompat)
-                .setTitle(R.string.smidivalexceeded)
-                .setMessage(msg)
-                .setPositiveButton(R.string.sok) {_,_->
-                    return@setPositiveButton
-                }
-                .show()
+            showErrorDialog(context, resources.getString(R.string.smidivalexceeded), msg)
             return false
         }
         btn.mNoteNumber = programnumber
