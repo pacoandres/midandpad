@@ -19,7 +19,7 @@ The app can be downloaded and installed in multiple ways:
 (May be in the future in F-Droid, but need some time)
 
 ## Manual
-For reading de users manual [Enlace al manual]
+For reading de users manual [English manual](https://github.com/pacoandres/midandpad/wiki/English-manual)
 
 ## Acknowledgements
 
