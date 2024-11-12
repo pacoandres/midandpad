@@ -10,8 +10,8 @@ Aprovechando la posibilidad que existe en Android de utilizar el puerto USB como
 La aplicación se puede descargar e instalar de varias maneras:
 
 
-* A través de [Releases]
-* A través de [playstore]
+* A través de [Releases](https://github.com/pacoandres/midandpad/releases/)
+* A través de [playstore] (pendiente).
 * Descargando el código y compilándolo.
 
 (Intentaré que también esté en F-Droid, pero necesito sacar tiempo)
