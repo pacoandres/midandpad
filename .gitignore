@@ -118,3 +118,7 @@ gradle-app.setting
 *.old
 /borrar
 /images
+
+
+# Documentation, as the wiki has its own repository
+doc/
