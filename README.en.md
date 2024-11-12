@@ -12,8 +12,8 @@ Since Android 6.0 the USB port can be used as a MIDI interface, so a fairly comp
 The app can be downloaded and installed in multiple ways:
 
 
-* In the [Releases] page
-* In the [playstore]
+* In the [Releases page](https://github.com/pacoandres/midandpad/releases/)
+* In the [playstore] (pending).
 * Downloading and compiling.
 
 (May be in the future in F-Droid, but need some time)
