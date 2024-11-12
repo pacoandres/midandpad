@@ -18,7 +18,7 @@ La aplicación se puede descargar e instalar de varias maneras:
 
 ## Manual
 Para acceder al manual de uso (aunque tampoco es tan complicada)
-[Manual en castellano](https://github.com/pacoandres/midandpad/wiki/English-manual)
+[Manual en castellano](https://github.com/pacoandres/midandpad/wiki/Manual-en-castellano)
 
 ## Agradecimientos
 
