@@ -1,6 +1,7 @@
 package org.gnu.itsmoroto.midandpad
 
 import android.content.Context
+import android.graphics.Paint
 import android.text.Editable
 import android.view.View
 import android.view.ViewGroup
@@ -99,3 +100,9 @@ fun String.toEditable() : Editable =
 
 fun Int.toEditable (): Editable =
     Editable.Factory.getInstance().newEditable(this.toString())
+
+
+//Can't believe the need of this
+fun TextView.underlined() {
+    paintFlags = paintFlags or Paint.UNDERLINE_TEXT_FLAG
+}

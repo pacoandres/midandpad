@@ -19,10 +19,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import java.lang.reflect.Type
 
-class MidiHelper(context: Context): DeviceCallback(),
- OnDeviceOpenedListener{
+class MidiHelper(context: Context): DeviceCallback(){
     enum class EventTypes(val stringId:Int): TypeLabel {
         EVENT_NOTE (R.string.snote),
         EVENT_CONTROL (R.string.scc),
@@ -61,7 +59,8 @@ class MidiHelper(context: Context): DeviceCallback(),
 
 
 
-    private val mTickMutex = Mutex () //Can't find thread safety for sending
+    private val mSendMutex = Mutex () //Can't find thread safety for sending
+    private val mOpenMutex = Mutex () //Prevent race conditions on open, as can't find doc for this.
     private var mLastCommand: UByte = 0U
      companion object {
          const val MAXMIDIVALUE: Int = 0x7F
@@ -119,30 +118,18 @@ class MidiHelper(context: Context): DeviceCallback(),
          }
      }
 
-    /*private class Receiver (m:MainActivity): MidiReceiver() {
-        private val mMain = m
-        @OptIn(ExperimentalUnsignedTypes::class)
-        override fun onSend (msg: ByteArray, offset: Int, count: Int, timestamp: Long){
-            val umsg = msg.toUByteArray()
-            if (umsg[offset] != STATUS_TIMING_CLOCK)
-                return
-            //Is tick. There are 24 ticks per quarter note
-            MainScreen.clockTick()
-            val m = Message.obtain()
-            m.obj = MainActivity.AppEvents.MIDICLOCK
-            mMain.mMsgHandler.sendMessage(m)
-        }
-    }*/
 
-
-    val mDevices: ArrayList<MidiDeviceInfo> = ArrayList<MidiDeviceInfo>()
+    val mDevicesOut: ArrayList<MidiDeviceInfo> = ArrayList<MidiDeviceInfo>()
+    val mDevicesIn: ArrayList<MidiDeviceInfo> = ArrayList<MidiDeviceInfo>()
     private var mMIDIManager: MidiManager? = null
     private var mOutPort: MidiInputPort? = null
     private var mInPort: MidiOutputPort? = null
-    private var mDevice: MidiDevice? = null
+    private var mDeviceOut: MidiDevice? = null
+    private var mDeviceIn: MidiDevice? = null
     private var mNPortSend: Int = -1
     private var mNPortRecv: Int = -1
-    private var mNConnect: Int = -1
+    private var mNConnectOut: Int = -1
+    private var mNConnectIn: Int = -1
     private val mMain = context as MainActivity
     init {
 
@@ -151,7 +138,10 @@ class MidiHelper(context: Context): DeviceCallback(),
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 val mididevices:Set<MidiDeviceInfo> = mMIDIManager!!.getDevicesForTransport(MidiManager.TRANSPORT_MIDI_BYTE_STREAM)
                 for (device in mididevices){
-                    mDevices.add(device)
+                    if (device.inputPortCount > 0)
+                        mDevicesOut.add(device)
+                    if (device.outputPortCount > 0)
+                        mDevicesIn.add (device)
                 }
                 mMIDIManager!!.registerDeviceCallback(
                     MidiManager.TRANSPORT_MIDI_BYTE_STREAM,
@@ -161,7 +151,10 @@ class MidiHelper(context: Context): DeviceCallback(),
             } else {
                 val mididevices:Array<MidiDeviceInfo> = mMIDIManager!!.devices
                 for (device in mididevices){
-                    mDevices.add(device)
+                    if (device.inputPortCount > 0)
+                        mDevicesOut.add(device)
+                    if (device.outputPortCount > 0)
+                        mDevicesIn.add (device)
                 }
                 mMIDIManager!!.registerDeviceCallback(this, null)
             }
@@ -171,9 +164,18 @@ class MidiHelper(context: Context): DeviceCallback(),
 
     override fun onDeviceAdded(deviceinfo: MidiDeviceInfo?) {
         super.onDeviceAdded(deviceinfo)
+        var added = false
         if (deviceinfo != null) {
             if (deviceinfo.inputPortCount > 0) {
-                mDevices.add(deviceinfo)
+                mDevicesOut.add(deviceinfo)
+                added = true
+            }
+            if (deviceinfo.outputPortCount > 0) {
+                mDevicesIn.add(deviceinfo)
+                added = true
+            }
+
+            if (added){
                 val m = Message.obtain()
                 m.obj = MainActivity.AppEvents.MIDICHANGES
                 mMain.mMsgHandler.sendMessage(m)
@@ -184,76 +186,125 @@ class MidiHelper(context: Context): DeviceCallback(),
     override fun onDeviceRemoved(deviceinfo: MidiDeviceInfo?) {
         super.onDeviceRemoved(deviceinfo)
 
-        if (mDevices.indexOf(deviceinfo) == mNConnect) {
-            mDevice!!.close()
-            mDevice = null
+        if (mDevicesOut.indexOf(deviceinfo) == mNConnectOut ||
+            mDevicesIn.indexOf(deviceinfo) == mNConnectIn) {//needs to be fixed
+            mDeviceOut!!.close()
+            mDeviceOut = null
         }
-        else {
-            val m = Message.obtain()
-            m.obj = MainActivity.AppEvents.MIDICHANGES
-            mMain.mMsgHandler.sendMessage(m)
-        }
-        mDevices.remove(deviceinfo)
+        mDevicesOut.remove(deviceinfo)
+        mDevicesIn.remove(deviceinfo)
+        val m = Message.obtain()
+        m.obj = MainActivity.AppEvents.MIDICHANGES
+        mMain.mMsgHandler.sendMessage(m)
+
+
     }
 
-    fun closeDevice (){
-        val m = Message.obtain()
-        m.obj = MainActivity.AppEvents.MIDICLOSE
-        mMain.mMsgHandler.sendMessage(m)
-        if (mInPort != null){
-            mInPort!!.close()
-            mInPort = null
-        }
+    fun closeMidiOut (){
         if (mOutPort != null){
             mOutPort!!.close()
             mOutPort = null
         }
-        if (mDevice != null) {
-            mDevice!!.close()
-            mDevice = null
+        if (mDeviceOut != null && (mDeviceIn == null || mDeviceIn != mDeviceOut)){
+            mDeviceOut!!.close()
+            mDeviceOut = null
+        }
+        if (mDeviceIn == null){
+            val m = Message.obtain()
+            m.obj = MainActivity.AppEvents.MIDICLOSE
+            mMain.mMsgHandler.sendMessage(m)
         }
     }
-    fun openDevice (deviceinfo: MidiDeviceInfo, nportsend:Int, nportrecv: Int){
-        closeDevice()
-        if (deviceinfo.inputPortCount < 1 /*|| deviceinfo.outputPortCount < 1*/)
-            return
+
+    fun closeMidiIn (){
+        if (mInPort != null){
+            mInPort!!.close()
+            mInPort = null
+        }
+        if (mDeviceIn != null && (mDeviceOut == null || mDeviceIn != mDeviceOut)){
+            mDeviceIn!!.close()
+            mDeviceIn = null
+        }
+        if (mDeviceOut == null){
+            val m = Message.obtain()
+            m.obj = MainActivity.AppEvents.MIDICLOSE
+            mMain.mMsgHandler.sendMessage(m)
+        }
+    }
+
+    fun closeMidi (){
+        closeMidiIn()
+        closeMidiOut()
+    }
+
+
+    fun openDeviceOut (deviceinfo: MidiDeviceInfo, nportsend:Int) {
         if (mMIDIManager == null)
             return
-        closeDevice()
+        closeMidiOut()
+        if (deviceinfo.inputPortCount < 1 /*|| deviceinfo.outputPortCount < 1*/)
+            return
         mNPortSend = nportsend
-        mNPortRecv = nportrecv
-        mMIDIManager!!.openDevice(deviceinfo, this, null)
+        val outListener = OnDeviceOpenedListener { device: MidiDevice ->
+            runBlocking() {
+                mOpenMutex.withLock {
+                    mNConnectOut = mDevicesOut.indexOf(device.info)
+                    mDeviceOut = device
+                    mOutPort = device.openInputPort(mNPortSend)
+                    val m = Message.obtain()
+                    m.obj = MainActivity.AppEvents.MIDIOPEN
+                    mMain.mMsgHandler.sendMessage(m)
+                }
+            }
+        }
+        mMIDIManager!!.openDevice(deviceinfo, outListener, null)
     }
-
 
     @OptIn(ExperimentalUnsignedTypes::class)
-    override fun onDeviceOpened(device: MidiDevice) {
-        mNConnect = mDevices.indexOf(device.info)
-        mDevice = device
-        mOutPort = device.openInputPort(mNPortSend)
-        if (mNPortRecv != -1) {
-            mInPort = device.openOutputPort(mNPortRecv)
-            //mInPort!!.connect(Receiver (mMain))
-            mInPort!!.connect(object : MidiReceiver() {
-                override fun onSend(msg: ByteArray?, offset: Int, count: Int, timestamp: Long) {
-                    if (STATUS_TIMING_CLOCK in msg!!.toUByteArray()) {
-                        MainScreen.clockTick()
-                        val m = Message.obtain()
-                        m.obj = MainActivity.AppEvents.MIDICLOCK
-                        mMain.mMsgHandler.sendMessage(m)
-                    }
+    val mMidiReceiver = object : MidiReceiver() {
+        override fun onSend(msg: ByteArray?, offset: Int, count: Int, timestamp: Long) {
+            if (STATUS_TIMING_CLOCK in msg!!.toUByteArray()) {
+                MainScreen.clockTick()
+                val m = Message.obtain()
+                m.obj = MainActivity.AppEvents.MIDICLOCK
+                mMain.mMsgHandler.sendMessage(m)
+            }
 
-                }
-
-            })
         }
-        val m = Message.obtain()
-        m.obj = MainActivity.AppEvents.MIDIOPEN
-        mMain.mMsgHandler.sendMessage(m)
     }
 
+    fun openDeviceIn (deviceinfo: MidiDeviceInfo, nportrecv:Int) {
+        runBlocking() {
+            mOpenMutex.withLock {
+                if (mMIDIManager == null)
+                    return@withLock
+                closeMidiIn()
+                if (deviceinfo.outputPortCount < 1 /*|| deviceinfo.outputPortCount < 1*/)
+                    return@withLock
+                mNPortRecv = nportrecv
+                if (mDeviceOut != null && mDeviceOut!!.info == deviceinfo){
+                    mDeviceIn = mDeviceOut
+                    mInPort = mDeviceIn!!.openOutputPort(mNPortRecv)
+                    //mInPort!!.connect(Receiver (mMain))
+                    mInPort!!.connect(mMidiReceiver)
+                    return@withLock
+                }
+
+                val inListener = OnDeviceOpenedListener {device: MidiDevice ->
+                    mDeviceIn = device
+                    mInPort = mDeviceIn!!.openOutputPort(mNPortRecv)
+                    //mInPort!!.connect(Receiver (mMain))
+                    mInPort!!.connect(mMidiReceiver)
+                }
+                mMIDIManager!!.openDevice(deviceinfo, inListener, null)
+
+            }
+        }
+    }
+
+
     fun haveConnection (): Boolean{
-        return (mDevice != null && mOutPort != null)
+        return (mDeviceOut != null && mOutPort != null)
     }
 
     fun send (command: UByte, msg: ByteArray) {
@@ -262,20 +313,23 @@ class MidiHelper(context: Context): DeviceCallback(),
             Log.e (ConfigParams.MODULE, "Sending message to no midi device")
             return
         }
-        if (command != mLastCommand){
+        if (command != mLastCommand || command > 0xEFu){
             message.add(command.toByte())
         }
         message.addAll(msg.toList())
         runBlocking {
             launch {
                 coroutineScope {
-                    mTickMutex.withLock {
+                    mSendMutex.withLock {
                         mOutPort!!.send(message.toByteArray(), 0, message.size, System.nanoTime())
                     }
                 }
             }
         }
-        mLastCommand == command
+        if (command < 0xF0u)
+            mLastCommand == command
+        else if (command > 0xEFu && command < 0xF8u)
+            mLastCommand = 0U
     }
 
 

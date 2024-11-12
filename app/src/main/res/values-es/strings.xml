@@ -31,7 +31,7 @@
     <string name="sbarzeroval">Valor Cero</string>
     <string name="svalueoff">Valor Off</string>
     <string name="svalueon">Valor On</string>
-    <string name="serrorfulfillment">Dispositivo, input port y canal por defecto son obligatorios.</string>
+    <string name="serrorfulfillment">La salida de la aplicación y el canal por defecto son obligatorios.</string>
     <string name="snomidi">Este dispositivo no tiene soporte MIDI. La aplicación se cerrara.</string>
     <string name="schord">Acorde</string>
     <string name="snosendoff">No envía off</string>
@@ -56,7 +56,7 @@
     <string name="smidivalexceeded">Valor MIDI excedido.</string>
     <string name="svalexceedmessage">El valor de [field] debe estar entre 0 y [value].</string>
     <string name="svelocity">Velocidad</string>
-    <string name="sclockdisclaimer">Para que los modos Roll y Arpegio funcionen la aplicación debe recibir mensajes Timing Clock del secuenciador.\nEn otro caso no haran nada.</string>
+    <string name="sclockdisclaimer">Para que los modos Roll y Arpegio funcionen la aplicación debe recibir mensajes Timing Clock de un secuenciador.\nEn otro caso no haran nada.</string>
     <string name="spresetloaded">Cargado preset [presetname]</string>
     <string name="spresetsaved">Guardado preset [presetname]</string>
     <string name="srestore">Restaurar</string>
@@ -67,7 +67,7 @@
     <string name="syes">Sí</string>
     <string name="sno">No</string>
     <string name="snomidiintitle">Limitación en MIDI</string>
-    <string name="snomidiinmsg">La aplicación no recibirá mensajes MIDI clock con el dispositivo seleccionado.\nAlgunas configuraciones de pad, como roll o arpegio, no funcionarán como deberían.</string>
+    <string name="snomidiinmsg">La aplicación no recibirá mensajes MIDI clock con la configuración seleccionada.\nAlgunas configuraciones de pad, como roll o arpegio, no funcionarán como deberían.</string>
     <string name="sdatabaseerror">Error de base de datos</string>
     <string name="sinserterror">Error al insertar en la tabla [table]</string>
     <string name="supdateerror">Error al actualizar la tabla [table]</string>
@@ -81,4 +81,8 @@
     <string name="sdelfactory">No se puede eliminar el preset de fábrica</string>
     <string name="srenamefactory">No se puede renombrar el preset de fábrica</string>
     <string name="ssavefactory">No se puede modificar el preset de fábrica. Utiliza \"Guardar Como\"</string>
+    <string name="smidiconfigtitle">Configuración MIDI</string>
+    <string name="sappouttitle">Dispositivo de salida de la aplicación</string>
+    <string name="sport">Puerto</string>
+    <string name="sappintitle">Dispositivo de entrada a la aplicación</string>
 </resources>

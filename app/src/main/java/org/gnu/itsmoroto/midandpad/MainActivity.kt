@@ -1,16 +1,12 @@
 package org.gnu.itsmoroto.midandpad
 
 
-import android.content.ContentResolver
-import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Environment
 import android.os.Handler
 import android.os.Message
 import android.util.Log
@@ -22,7 +18,6 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
-import androidx.core.net.toFile
 import androidx.documentfile.provider.DocumentFile
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -232,7 +227,7 @@ class MainActivity : AppCompatActivity(), Runnable {
 
     private fun exitMidAndPad (){
         mConfigParams.saveCurrent()
-        mMidi.closeDevice()
+        mMidi.closeMidi()
         exitProcess(0)
     }
 

@@ -1,14 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/midiconfig"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/layout_background">
 
     <TextView
-        android:id="@+id/available_devices"
+        android:id="@+id/midiconfigtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/titleleftmargin"
+        android:layout_marginTop="@dimen/margintop"
+        android:fontFamily="sans-serif-black"
+        android:text="@string/smidiconfigtitle"
+        android:textColor="@color/textcolor"
+        android:textSize="@dimen/titlesize"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/appouttitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/titleleftmargin"
+        android:layout_marginTop="@dimen/margintop"
+        android:fontFamily="sans-serif-black"
+        android:text="@string/sappouttitle"
+        android:textColor="@color/textcolor"
+        android:textSize="@dimen/title2size"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/midiconfigtitle" />
+
+    <TextView
+        android:id="@+id/availabledevicesout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/titleleftmargin"
@@ -16,57 +47,55 @@
         android:fontFamily="sans-serif-black"
         android:text="@string/available_devices"
         android:textColor="@color/textcolor"
-        android:textSize="@dimen/titlesize"
+        android:textSize="@dimen/statussize"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/appouttitle" />
 
     <TextView
-        android:id="@+id/ndevices"
+        android:id="@+id/ndevicesout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/stdmargin"
         android:text="0"
         android:textColor="@color/textcolor"
-        android:textSize="@dimen/titlesize"
-        app:layout_constraintStart_toEndOf="@+id/available_devices"
-        app:layout_constraintBottom_toBottomOf="@+id/available_devices" />
+        android:textSize="@dimen/statussize"
+        app:layout_constraintStart_toEndOf="@+id/availabledevicesout"
+        app:layout_constraintBottom_toBottomOf="@+id/availabledevicesout" />
 
     <TextView
         android:id="@+id/labeldevice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/stdmargin"
-        android:layout_marginEnd="@dimen/stdmargin"
-        android:layout_marginTop="@dimen/posttitlemargin"
+        android:layout_marginTop="@dimen/margintop"
         android:text="@string/slabeldevice"
-        android:textSize="@dimen/labelsize"
         android:textColor="@color/textcolor"
+        android:textSize="@dimen/labelsize"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/available_devices" />
+        app:layout_constraintTop_toBottomOf="@+id/availabledevicesout" />
 
     <Spinner
-        android:id="@+id/selectdevice"
+        android:id="@+id/selectdeviceout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/stdmargin"
-        android:layout_marginTop="@dimen/posttitlemargin"
-        android:textSize="@dimen/labelsize"
+        android:layout_marginTop="@dimen/margintop"
         android:textColor="@color/textcolor"
+        android:textSize="@dimen/labelsize"
         app:layout_constraintStart_toEndOf="@+id/labeldevice"
-        app:layout_constraintTop_toBottomOf="@+id/available_devices"/>
+        app:layout_constraintTop_toBottomOf="@+id/availabledevicesout" />
 
     <TextView
         android:id="@+id/labelporto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/stdmargin"
-        android:layout_marginEnd="@dimen/stdmargin"
         android:layout_marginTop="@dimen/margintop"
-        android:textSize="@dimen/labelsize"
-        android:text="@string/slabelporto"
+        android:text="@string/sport"
         android:textColor="@color/textcolor"
+        android:textSize="@dimen/labelsize"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/labeldevice"/>
+        app:layout_constraintTop_toBottomOf="@+id/labeldevice" />
 
     <Spinner
         android:id="@+id/selectporto"
@@ -79,19 +108,81 @@
         app:layout_constraintTop_toTopOf="@+id/labelporto"
         app:layout_constraintStart_toEndOf="@+id/labelporto"/>
 
+    <!--input-->
+
+    <TextView
+        android:id="@+id/appintitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/titleleftmargin"
+        android:layout_marginTop="@dimen/posttitlemargin"
+        android:fontFamily="sans-serif-black"
+        android:text="@string/sappintitle"
+        android:textColor="@color/textcolor"
+        android:textSize="@dimen/title2size"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labelporto" />
+
+    <TextView
+        android:id="@+id/availabledevicesin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/titleleftmargin"
+        android:layout_marginTop="@dimen/margintop"
+        android:fontFamily="sans-serif-black"
+        android:text="@string/available_devices"
+        android:textColor="@color/textcolor"
+        android:textSize="@dimen/statussize"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appintitle" />
+
+    <TextView
+        android:id="@+id/ndevicesin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:text="0"
+        android:textColor="@color/textcolor"
+        android:textSize="@dimen/statussize"
+        app:layout_constraintStart_toEndOf="@+id/availabledevicesin"
+        app:layout_constraintBottom_toBottomOf="@+id/availabledevicesin" />
+
+    <TextView
+        android:id="@+id/labeldevicein"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginTop="@dimen/margintop"
+        android:text="@string/slabeldevice"
+        android:textColor="@color/textcolor"
+        android:textSize="@dimen/labelsize"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/availabledevicesin" />
+
+    <Spinner
+        android:id="@+id/selectdevicein"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginTop="@dimen/margintop"
+        android:textColor="@color/textcolor"
+        android:textSize="@dimen/labelsize"
+        app:layout_constraintStart_toEndOf="@+id/labeldevicein"
+        app:layout_constraintTop_toBottomOf="@+id/availabledevicesin" />
 
     <TextView
         android:id="@+id/labelporti"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margintop"
+        android:layout_marginStart="@dimen/stdmargin"
         android:layout_marginEnd="@dimen/stdmargin"
         android:layout_marginTop="@dimen/margintop"
         android:textSize="@dimen/labelsize"
-        android:text="@string/slabelporti"
+        android:text="@string/sport"
         android:textColor="@color/textcolor"
-        app:layout_constraintStart_toEndOf="@id/selectporto"
-        app:layout_constraintTop_toBottomOf="@+id/labeldevice"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labeldevicein"/>
 
     <Spinner
         android:id="@+id/selectporti"
@@ -101,21 +192,21 @@
         android:textSize="@dimen/labelsize"
         android:textColor="@color/textcolor"
         android:textAlignment="textEnd"
-        app:layout_constraintTop_toTopOf="@+id/labelporto"
+        app:layout_constraintTop_toTopOf="@+id/labelporti"
         app:layout_constraintStart_toEndOf="@+id/labelporti"/>
+
 
     <TextView
         android:id="@+id/labelchannel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/stdmargin"
-        android:layout_marginEnd="@dimen/stdmargin"
-        android:layout_marginTop="@dimen/margintop"
+        android:layout_marginTop="@dimen/posttitlemargin"
         android:text="@string/slabeldefchannel"
-        android:textSize="@dimen/labelsize"
         android:textColor="@color/textcolor"
+        android:textSize="@dimen/labelsize"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/labelporto" />
+        app:layout_constraintTop_toBottomOf="@+id/labelporti" />
 
     <Spinner
         android:id="@+id/selectchannel"
@@ -132,14 +223,14 @@
         android:id="@+id/labelppq"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/stdmargin"
+        android:layout_marginStart="@dimen/posttitlemargin"
         android:layout_marginEnd="@dimen/stdmargin"
         android:layout_marginTop="@dimen/posttitlemargin"
-        android:text="@string/slabeldevice"
+        android:text="@string/sppq"
         android:textSize="@dimen/labelsize"
         android:textColor="@color/textcolor"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/selectchannel" />
+        app:layout_constraintStart_toEndOf="@+id/selectporti"
+        app:layout_constraintBottom_toBottomOf="@+id/selectporti" />
 
     <EditText
         android:id="@+id/ppq"
@@ -155,19 +246,19 @@
         app:layout_constraintBottom_toBottomOf="@+id/labelppq"/>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/stdmargin"
-        android:layout_marginEnd="@dimen/stdmargin"
         android:layout_marginTop="@dimen/margintop"
+        android:layout_marginEnd="@dimen/stdmargin"
         android:text="@string/sclockdisclaimer"
         android:textAllCaps="false"
         android:textColor="@color/textcolor"
         android:textSize="@dimen/labelsize"
         android:textStyle="italic"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/labelppq" />
+        app:layout_constraintStart_toEndOf="@id/disclaimerbarrier"
+        app:layout_constraintTop_toBottomOf="@id/availabledevicesin" />
 
     <Button
         android:id="@+id/opendevice"
@@ -176,7 +267,7 @@
         android:layout_margin="@dimen/controlbuttonmargin"
         android:textSize="@dimen/labelsize"
         android:text="@string/sopen"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labelchannel"
         app:layout_constraintEnd_toStartOf="@+id/cancelcalib"/>
     <Button
         android:id="@+id/cancelcalib"
@@ -185,9 +276,17 @@
         android:layout_margin="@dimen/controlbuttonmargin"
         android:textSize="@dimen/labelsize"
         android:text="@string/scancel"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labelchannel"
         app:layout_constraintEnd_toEndOf="parent"
         />
 
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/disclaimerbarrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="end"
+        app:constraint_referenced_ids="selectdevicein,ppq"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

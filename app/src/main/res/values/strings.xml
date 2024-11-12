@@ -36,7 +36,7 @@
     <string name="sbarzeroval">Zero value</string>
     <string name="svalueoff">Off value</string>
     <string name="svalueon">On value</string>
-    <string name="serrorfulfillment">Device, input port and default channel are mandatory.</string>
+    <string name="serrorfulfillment">App output configuration and default channel are mandatory.</string>
     <string name="snomidi">This device does not support MIDI. Exiting.</string>
     <string name="sroll" translatable="false">Roll</string>
     <string name="sflam" translatable="false">Flam</string>
@@ -70,7 +70,7 @@
     <string name="smidivalexceeded">MIDI value exceeded.</string>
     <string name="svalexceedmessage">The value of [field] must be between 0 and [value].</string>
     <string name="svelocity">Velocity</string>
-    <string name="sclockdisclaimer">For Roll and Arpeggio modes to work the application must receive Timing Clock messages from the sequencer.\nOtherwise they will do nothing.</string>
+    <string name="sclockdisclaimer">For Roll and Arpeggio modes to work the application must receive Timing Clock messages from a sequencer.\nOtherwise they will do nothing.</string>
     <string name="sclock" translatable="false">CLOCK</string>
     <string name="spresetloaded">Preset [presetname] loaded</string>
     <string name="spresetsaved">Preset [presetname] saved</string>
@@ -84,7 +84,7 @@
     <string name="syes">Yes</string>
     <string name="sno">No</string>
     <string name="snomidiintitle">MIDI limitation</string>
-    <string name="snomidiinmsg">The application can\'t receive MIDI clock messages with the selected device.\nSome pad types, like roll or arpeggio, couldn\'t work as expected.</string>
+    <string name="snomidiinmsg">The application can\'t receive MIDI clock messages with the selected configuration.\nSome pad types, like roll or arpeggio, couldn\'t work as expected.</string>
     <string name="sdatabaseerror">Database error</string>
     <string name="sinserterror">Error inserting in table [table]</string>
     <string name="supdateerror">Error updating table [table]</string>
@@ -99,4 +99,9 @@
     <string name="srenamefactory">Can\'t rename factory preset</string>
     <string name="ssavefactory">Can\'t write fractory preset. Choose \"Save As\"</string>
     <string name="spreset" translatable="false">Preset</string>
+    <string name="sppq" translatable="false">PPQ</string>
+    <string name="smidiconfigtitle">MIDI config</string>
+    <string name="sappouttitle">App output device:</string>
+    <string name="sport">Port</string>
+    <string name="sappintitle">App input device</string>
 </resources>

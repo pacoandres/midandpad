@@ -14,7 +14,7 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
     private class FlamPrimary(note: Int, vel:Int, channel: Int): TimerTask (){
         private val mNote = note
         private val mVel = vel
-        private val mChannel = if (channel != -1) channel.toUByte()
+        private val mChannel = if (channel != MidandpadDB.DEFAULT_CHANNEL) channel.toUByte()
             else MainActivity.mConfigParams.mDefaultChannel
 
         @OptIn(ExperimentalUnsignedTypes::class)
@@ -29,7 +29,7 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
     private class RollNote(note: Int, vel:Int, channel: Int): TimerTask (){
         private val mNote = note
         private val mVel = vel
-        private val mChannel = if (channel != -1) channel.toUByte()
+        private val mChannel = if (channel != MidandpadDB.DEFAULT_CHANNEL) channel.toUByte()
         else MainActivity.mConfigParams.mDefaultChannel
 
         @OptIn(ExperimentalUnsignedTypes::class)
@@ -119,6 +119,7 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
     private var mFlamTimer: Timer? = null
     private var mRollTimer: Timer? = null
 
+    @OptIn(ExperimentalUnsignedTypes::class)
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         val ret = super.onTouchEvent(event)
         if (event == null)
@@ -245,6 +246,7 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
                                     mRollTimer?.cancel()
                                     mRollTimer = null
                                 }
+                                sendMidi (mVel, OFF)
                             }
                             NOTEOFFTYPES.FLAM ->
                                 return true
@@ -287,11 +289,24 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
                                 sendMidi(mVel, ON)*/
                                 return true
                             }
-                            CHORDOFFTYPES.ARPEGGIOFF,
-                            CHORDOFFTYPES.ARPEGGIONOFF ->{
-                                return super.onTouchEvent(event)
+                            CHORDOFFTYPES.ARPEGGIOFF->{
+                                val msg = ArrayList<UByte> ()
+                                val channel: UByte = if (mChannel != MidandpadDB.DEFAULT_CHANNEL)
+                                    mChannel.toUByte()
+                                else
+                                    MainActivity.mConfigParams.mDefaultChannel
+                                val command = MidiHelper.STATUS_NOTE_OFF or channel
+                                val note = if (mNotePosition == 0) mChordNotes.last()
+                                    else mChordNotes[mNotePosition - 1]
+                                msg.add(note.toUByte())
+                                msg.add(0U)
+                                MainActivity.mMidi.send(command, msg.toUByteArray().toByteArray())
+                                return true
                             }
-                            null->return@run
+
+                            CHORDOFFTYPES.ARPEGGIONOFF,
+                            null->
+                                return@run
                         }
                     }
                 }
@@ -331,7 +346,7 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
     @OptIn(ExperimentalUnsignedTypes::class)
     private fun sendMidi (vel: Int, type: Int){
         val msg = ArrayList<UByte> ()
-        val channel = if (mChannel != -1) mChannel.toUByte() else MainActivity.mConfigParams.mDefaultChannel
+        val channel = if (mChannel != MidandpadDB.DEFAULT_CHANNEL) mChannel.toUByte() else MainActivity.mConfigParams.mDefaultChannel
         var command: UByte = 0U
         when (mType) {
             MidiHelper.EventTypes.EVENT_NOTE -> {
@@ -394,7 +409,7 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
             return
 
         val msg = ArrayList<UByte> ()
-        val channel:UByte = if (mChannel > -1) mChannel.toUByte()
+        val channel:UByte = if (mChannel > MidandpadDB.DEFAULT_CHANNEL) mChannel.toUByte()
             else MainActivity.mConfigParams.mDefaultChannel
         var command: UByte = 0U
         if (mInRoll) {
