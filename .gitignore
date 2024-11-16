@@ -122,3 +122,7 @@ gradle-app.setting
 
 # Documentation, as the wiki has its own repository
 doc/
+
+# relase and debug
+app/release/
+app/debug/

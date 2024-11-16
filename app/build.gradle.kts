@@ -12,10 +12,10 @@ android {
         applicationId = "org.gnu.itsmoroto.midandpad"
         minSdk = 24
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "1.1"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("Integer", "dbversion", "1")
+        buildConfigField("Integer", "dbversion", "2")
     }
 
     buildTypes {
@@ -32,6 +32,15 @@ android {
         //jvmTarget = "1.8"
         jvmTarget = "17"
     }
+    sourceSets {
+        getByName("main") {
+            res {
+                srcDirs("src/main/res", "src/main/res/eventbutton"
+                )
+            }
+        }
+    }
+
 
 }
 

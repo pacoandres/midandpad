@@ -29,6 +29,7 @@ class ButtonChordCfg (context: Context) : PropertiesView (context) {
     private val mButtonPlus: Button
 
     private val mDisclaimer: TextView
+    private val mNoteToggle: CheckBox
 
     private var mCurrBtn: EventButton? = null
     private val mNotes: LinkedHashMap<Button, NoteRow> = LinkedHashMap<Button, NoteRow>()
@@ -68,6 +69,7 @@ class ButtonChordCfg (context: Context) : PropertiesView (context) {
         mButtonPlus = findViewById(R.id.buttonplus)
         mButtonPlus.setOnClickListener (::newNote)
         mDisclaimer = findViewById(R.id.chorddiscalimer)
+        mNoteToggle = findViewById(R.id.ischordtoggle)
     }
 
     fun initNoteTimeAdapter () { //No roll in apeggio.
@@ -142,6 +144,8 @@ class ButtonChordCfg (context: Context) : PropertiesView (context) {
             //TODO ("This is a problem. Should not happen")
             return
         }
+        mNoteToggle.isChecked = btn.mNoteToggle
+        showToggle(btn.mNoteToggle)
         mNote1.setSelection(btn.mChordNotes[0])
         mNote2.setSelection(btn.mChordNotes[1])
         for (i in 2..btn.mChordNotes.count()-1){
@@ -161,12 +165,18 @@ class ButtonChordCfg (context: Context) : PropertiesView (context) {
         btn.mChordNotes.clear()
         btn.mChordNotes.add (mNote1.selectedItemPosition)
         btn.mChordNotes.add (mNote2.selectedItemPosition)
+        if (type.hasToggle)
+            btn.mNoteToggle = mNoteToggle.isChecked
+        else
+            btn.mNoteToggle = false
         for (note in mNotes){
             btn.mChordNotes.add(note.value.getNote())
         }
         return true
     }
-
+    private fun showToggle (show: Boolean){
+        mNoteToggle.visibility = if (show) VISIBLE else GONE
+    }
     private fun setChordTypeHandler () {
         mChordType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -188,6 +198,7 @@ class ButtonChordCfg (context: Context) : PropertiesView (context) {
                 } else {
                     showTime(GONE)
                 }
+                showToggle(selected.hasToggle)
 
             }
 

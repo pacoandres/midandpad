@@ -24,6 +24,7 @@ class ButtonNoteCfg (context: Context): PropertiesView (context) {
     private val mIsTriplet: CheckBox
 
     private val mClockDisclaimer: TextView
+    private val mNoteToggle: CheckBox
 
 
     init {
@@ -43,6 +44,7 @@ class ButtonNoteCfg (context: Context): PropertiesView (context) {
 
         mIsTriplet = findViewById(R.id.istripletcheck)
         mClockDisclaimer = findViewById(R.id.noteclockdiscalimer)
+        mNoteToggle = findViewById(R.id.isnotetoggle)
         fillCombos ()
     }
 
@@ -58,11 +60,15 @@ class ButtonNoteCfg (context: Context): PropertiesView (context) {
                 parent: AdapterView<*>?, v: View?,
                 pos: Int, id: Long
             ) {
+                if (mTypeAdapter.getItem(pos) == null)
+                    return
                 if (mTypeAdapter.getItem(pos) != EventButton.NOTEOFFTYPES.ROLL){
                     showOFF (GONE)
                 }
                 else
                     showOFF (VISIBLE)
+
+                showToggle(mTypeAdapter.getItem(pos)!!.hasToggle)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -74,7 +80,12 @@ class ButtonNoteCfg (context: Context): PropertiesView (context) {
         mRollLengthAdapter.setDropDownViewResource(R.layout.dropdowncomboview)
         mRollLength.adapter = mRollLengthAdapter
     }
-
+    private fun showToggle (show: Boolean){
+        if (show)
+            mNoteToggle.visibility = VISIBLE
+        else
+            mNoteToggle.visibility = GONE
+    }
     private fun showOFF (vis: Int){
         mLabelRollLength.visibility = vis
         mRollLength.visibility = vis
@@ -95,6 +106,8 @@ class ButtonNoteCfg (context: Context): PropertiesView (context) {
         else {
             showOFF(GONE)
         }
+        mNoteToggle.isChecked = btn.mNoteToggle
+        showToggle(btn.mNoteOFF!!.hasToggle)
 
     }
 
@@ -103,6 +116,10 @@ class ButtonNoteCfg (context: Context): PropertiesView (context) {
         btn.mNoteOFF = mTypeSelect.selectedItem as EventButton.NOTEOFFTYPES
         btn.mRollNote = mRollLength.selectedItem as MidiHelper.NOTE_TIME
         btn.setTriplet(mIsTriplet.isChecked)
+        if (btn.mNoteOFF!!.hasToggle)
+            btn.mNoteToggle = mNoteToggle.isChecked
+        else
+            btn.mNoteToggle = false
         return true
     }
 }

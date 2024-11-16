@@ -5,8 +5,8 @@
     <corners android:radius="8dp" />
     <gradient
         android:angle="90"
-        android:endColor="@color/colorCHBLight"
-        android:centerColor="@color/colorCHB"
-        android:startColor="@color/colorCHB" />
+        android:endColor="@color/colorCHBONLight"
+        android:centerColor="@color/colorCHBON"
+        android:startColor="@color/colorCHBON" />
 
 </shape>

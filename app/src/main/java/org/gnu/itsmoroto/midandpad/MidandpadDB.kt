@@ -20,6 +20,7 @@ class MidandpadDB//else throw exception
     companion object {
         val DEFAULT_CHANNEL = -1
         val NOTE_SEPARATOR = ";"
+        val VERSION1 = 1
     }
 
     init {
@@ -60,6 +61,7 @@ class MidandpadDB//else throw exception
                 ",chordnotes TEXT default NULL" +
                 ",rollnotetime INTEGER default 0" + //The NOTETIME ordinal, not the ticks
                 ",triplet INTEGER default 0" + //1 is triplet.
+                ",notetoggle INTEGER default 0"
                 ")"
         db.execSQL(q)
         q = "CREATE TABLE Bars (BarId INTEGER PRIMARY KEY" +//Aquí me quedo
@@ -84,6 +86,9 @@ class MidandpadDB//else throw exception
         //dbversion is configured in build.gradle.kts(:app)
         if (oldVersion < mVersion){
             //Do stuff
+            if (oldVersion < newVersion){
+                db.execSQL("ALTER TABLE Buttons ADD COLUMN notetoggle INTEGER default 0");
+            }
         }
     }
     private fun fillTables (db: SQLiteDatabase){
@@ -189,6 +194,7 @@ class MidandpadDB//else throw exception
             values.put("chordnotes", "60;64;67")
             values.put("rollnotetime", MidiHelper.NOTE_TIME.SIXTEENTH.ordinal)
             values.put("triplet", 0)
+            values.put("notetoggle", 0)
             db.insertOrThrow("Buttons", null, values)
 
             values.put("number", 12)
@@ -306,7 +312,7 @@ class MidandpadDB//else throw exception
         val db = readableDatabase
         val cursor = db.query ("Buttons",
             arrayOf("number", "name", "type", "noteoff", "note", "valueon", "valueoff", "channel",
-                "chordnotes", "rollnotetime", "triplet", "controloff", "chordoff"),
+                "chordnotes", "rollnotetime", "triplet", "controloff", "chordoff", "notetoggle"),
             "presetId=?", arrayOf(presetid.toString()), null, null,
             null, null)
         cursor.moveToFirst()
@@ -327,6 +333,7 @@ class MidandpadDB//else throw exception
             buttons[row][col].setTriplet (cursor.getInt(10))
             buttons[row][col].mControlOFF = EventButton.CONTROLOFFTYPES.entries[cursor.getInt(11)]
             buttons[row][col].mChordOFF = EventButton.CHORDOFFTYPES.entries[cursor.getInt(12)]
+            buttons[row][col].mNoteToggle = (cursor.getInt(13) == 1)
         }while (cursor.moveToNext())
         cursor.close()
         db.close()
@@ -496,6 +503,7 @@ class MidandpadDB//else throw exception
                     newvalues.put("chordnotes", b.getChordNotes())
                     newvalues.put("rollnotetime", b.mRollNote.ordinal)
                     newvalues.put("triplet", if (b.getIsTriplet()) 1 else 0)
+                    newvalues.put("notetoggle", if (b.mNoteToggle) 1 else 0)
                     if (db.update("Buttons", newvalues, "presetId=? and number=?",
                         arrayOf(id.toString(), number.toString())) == 0){
                         throw SQLiteException ("Error in update button: $id, $number")
@@ -596,6 +604,7 @@ class MidandpadDB//else throw exception
                     values.put("chordnotes", b.getChordNotes())
                     values.put("rollnotetime", b.mRollNote.ordinal)
                     values.put("triplet", if (b.getIsTriplet()) 1 else 0)
+                    values.put("notetoggle", if (b.mNoteToggle) 1 else 0)
                     db.insertOrThrow("Buttons", null, values)
                 }
             }
