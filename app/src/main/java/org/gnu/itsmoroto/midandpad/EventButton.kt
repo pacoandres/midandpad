@@ -331,8 +331,10 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
                                 return true
                             }
                             CHORDOFFTYPES.ARPEGGIOFF->{
-                                if (!mNoteToggle)
-                                    endArpeggio ()
+                                if (!mNoteToggle) {
+                                    mInRoll = false
+                                    endArpeggio()
+                                }
                                 else
                                     setClicked()
                                 return true

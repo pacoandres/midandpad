@@ -61,7 +61,7 @@ class MidandpadDB//else throw exception
                 ",chordnotes TEXT default NULL" +
                 ",rollnotetime INTEGER default 0" + //The NOTETIME ordinal, not the ticks
                 ",triplet INTEGER default 0" + //1 is triplet.
-                ",notetoggle INTEGER default 0"
+                ",notetoggle INTEGER default 0" +
                 ")"
         db.execSQL(q)
         q = "CREATE TABLE Bars (BarId INTEGER PRIMARY KEY" +//Aquí me quedo
