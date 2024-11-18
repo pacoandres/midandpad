@@ -12,14 +12,5 @@
     <color name="bartextcolor">#FFFF0000</color>
     <color name="coloron">#FF00FF00</color>
     <color name="coloroff">#FF000000</color>
-    <color name="colorNB">#CCA0A0A0</color>
-    <color name="colorNBLight">#CCD0D0D0</color>
-    <color name="colorCCBON">#FF00A000</color>
-    <color name="colorCCBONLight">#FF00FF00</color>
-    <color name="colorCCBOFF">#9060A060</color>
-    <color name="colorCCBOFFLight">#9060FF60</color>
-    <color name="colorPB">#CCA08080</color>
-    <color name="colorPBLight">#CCD0B0B0</color>
-    <color name="colorCHB">#CC8080A0</color>
-    <color name="colorCHBLight">#CCB0B0D0</color>
+
 </resources>

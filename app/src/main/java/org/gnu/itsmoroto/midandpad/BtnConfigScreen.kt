@@ -131,6 +131,7 @@ class BtnConfigScreen(context: Context): ConstraintLayout(context)  {
         mCurrButton!!.mChannel = mChannelSelect.selectedItemPosition - 1
         if (!mCurrPropsView!!.getProps(mCurrButton!!))
             return
+        mCurrButton!!.unclick()
         onBack()
     }
 

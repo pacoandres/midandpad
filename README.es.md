@@ -5,6 +5,8 @@ Un controlador MIDI para Android.
 
 Aprovechando la posibilidad que existe en Android de utilizar el puerto USB como interfaz MIDI (desde Android 6.0) y las capacidades de algunos dispositivos, se puede desarrollar un controlador bastante completo y con posibilidades de ampliación con tiempo y paciencia.
 
+Esta aplicación es un controlador MIDI, con lo que no reproduce ningún sonido. Para ello tiene que estar conectada a un sintetizador MIDI como Timidity o Fluidsynth.
+
 ## Descarga
 
 La aplicación se puede descargar e instalar de varias maneras:

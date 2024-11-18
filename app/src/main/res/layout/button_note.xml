@@ -52,6 +52,17 @@
         android:layout_marginStart="@dimen/stdmargin"
         app:layout_constraintStart_toEndOf="@+id/labelnotebehaviour"
         app:layout_constraintBottom_toBottomOf="@+id/labelnotebehaviour"/>
+    <CheckBox
+        android:id="@+id/isnotetoggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/labelsize"
+        android:textColor="@color/white"
+        android:layout_marginStart="@dimen/margintop"
+        android:layout_marginEnd="@dimen/stdmargin"
+        android:text="@string/stoggle"
+        app:layout_constraintStart_toEndOf="@+id/notebehaviour"
+        app:layout_constraintBottom_toBottomOf="@+id/labelnotebehaviour"/>
 
 
     <TextView

@@ -193,6 +193,7 @@ class MidiConfig (context: Context):ConstraintLayout (context) {
 
     private fun onOpenClick () {
         val seldeviceout = mDevicesOut[mSelectDeviceOut.selectedItem]
+
         val seldevicein: MidiDeviceInfo? =
             if (mSelectDeviceIn.selectedItem != NOPORT)
                 mDevicesIn[mSelectDeviceIn.selectedItem]
@@ -200,11 +201,16 @@ class MidiConfig (context: Context):ConstraintLayout (context) {
                 null
 
 
-        val selporto = mSelectOutPort.selectedItem as Int
+        val selporto = if (mSelectOutPort.selectedItem != null) mSelectOutPort.selectedItem as Int
+            else -1
+
+
 
         val selporti = if (mSelectInPort.selectedItem != null) mSelectInPort.selectedItem as Int
             else -1
-        val defchannel = mSelectChannel.selectedItem as Int
+
+        val defchannel = if (mSelectChannel.selectedItem != null) mSelectChannel.selectedItem as Int
+            else -1
 
         val msg = Message.obtain()
         if (selporto != -1 && seldeviceout != null && defchannel != -1

@@ -7,6 +7,8 @@ An Android MIDI controller
 
 Since Android 6.0 the USB port can be used as a MIDI interface, so a fairly complete controller can be developed with the possibility of expansion with time and patience.
 
+Notice that it's a MIDI controller, so it doesn't play any sound. For playing sounds it must be connected to a MIDI synth like Timidity or Fluidsynth.
+
 ## Download
 
 The app can be downloaded and installed in multiple ways:

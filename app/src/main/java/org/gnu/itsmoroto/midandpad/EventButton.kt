@@ -50,11 +50,11 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
     /*public val EVENT_NOTE: Int = 0
     public val EVENT_CONTROL: Int = 1*/
 
-    enum class NOTEOFFTYPES (val label: Int): TypeLabel{
-        NOSENDOFF (R.string.snosendoff),
-        SENDOFF (R.string.ssendoff),
-        ROLL (R.string.sroll),
-        FLAM (R.string.sflam);
+    enum class NOTEOFFTYPES (val label: Int, val hasToggle: Boolean): TypeLabel{
+        NOSENDOFF (R.string.snosendoff, false),
+        SENDOFF (R.string.ssendoff, true),
+        ROLL (R.string.sroll, true),
+        FLAM (R.string.sflam, false);
 
         override fun getLabelId(): Int {
             return label
@@ -70,11 +70,11 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
         }
     }
 
-    enum class CHORDOFFTYPES (val label:Int): TypeLabel {
-        FULLOFF (R.string.sfulloff),
-        FULLNOFF (R.string.sfullnoff),
-        ARPEGGIOFF (R.string.sarpeggioff),
-        ARPEGGIONOFF (R.string.sarpeggionoff);
+    enum class CHORDOFFTYPES (val label:Int, val hasToggle: Boolean): TypeLabel {
+        FULLOFF (R.string.sfulloff, true),
+        FULLNOFF (R.string.sfullnoff, false),
+        ARPEGGIOFF (R.string.sarpeggioff, true),
+        ARPEGGIONOFF (R.string.sarpeggionoff, false);
 
         override fun getLabelId(): Int {
             return label
@@ -98,14 +98,16 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
     var mONValue:Int = 0
     var mOFFValue: Int = 0
     var mChannel: Int = MidandpadDB.DEFAULT_CHANNEL
+    var mNoteToggle: Boolean = false
+
 
     private var mClockTicks = 0
     private var mClicked: Boolean = false
-    private val mOFFBG: Drawable = ResourcesCompat.getDrawable(resources,
+    private var mOFFBG: Drawable = ResourcesCompat.getDrawable(resources,
         R.drawable.ccbutton_off_background, null)!!
-    private val mONBG: Drawable = ResourcesCompat.getDrawable(resources,
+    private var mONBG: Drawable = ResourcesCompat.getDrawable(resources,
         R.drawable.ccbutton_on_background, null)!!
-
+    //Falta lo de los colores y probarlo todo.
     val mChordNotes = ArrayList<Int> ()
     var mRollNote: MidiHelper.NOTE_TIME = MidiHelper.NOTE_TIME.QUARTER
     private var mRollNoteTime: Int = 0
@@ -119,6 +121,7 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
     private var mFlamTimer: Timer? = null
     private var mRollTimer: Timer? = null
 
+
     @OptIn(ExperimentalUnsignedTypes::class)
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         val ret = super.onTouchEvent(event)
@@ -129,11 +132,11 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
             val p: Float = event.pressure
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
+                    mClicked = !mClicked
                     mInRoll = false
                     if (MainActivity.mConfigParams.mMode == ConfigParams.EDIT_MODE)
                         return@run
                     if (mType == MidiHelper.EventTypes.EVENT_NOTE) {
-
                         mVel = MainActivity.mConfigParams.getVelocity(p)
                         when (mNoteOFF) {
                             NOTEOFFTYPES.NOSENDOFF,
@@ -151,16 +154,29 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
                                     mFlamTimer!!.schedule(
                                         FlamPrimary (mNoteNumber, mVel, mChannel), MAXFLAMTIME)
                                 }
-                                else
-                                    sendMidi (mVel, ON)
+                                else {
+                                    if (mNoteToggle && !mClicked)
+                                        sendMidi(0, OFF)
+                                    else
+                                        sendMidi(mVel, ON)
+                                }
                                 return true
                             }
                             NOTEOFFTYPES.ROLL -> {
-                                if (mRollNote == MidiHelper.NOTE_TIME.ROLL){
+                                if (mRollNote == MidiHelper.NOTE_TIME.ROLL
+                                    && mRollTimer == null){
                                     startRoll ()
                                     return true
                                 }
-                                mInRoll = true
+                                if (mNoteToggle) {
+                                    mInRoll = mClicked
+                                    if (!mClicked ){
+                                        stopRoll()
+                                    }
+                                }
+                                else
+                                    mInRoll = true
+
                                 mClockTicks = mRollNoteTime
                                 return true
                             }
@@ -172,8 +188,12 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
                     } else if (mType == MidiHelper.EventTypes.EVENT_CONTROL) {
 
                         when (mControlOFF){
-                            CONTROLOFFTYPES.FIXED,
+                            CONTROLOFFTYPES.FIXED->{
+                                sendMidi(0, ON)
+                                return true
+                            }
                             CONTROLOFFTYPES.TOGGLE ->{
+                                sendMidi(0, if (mClicked) ON else OFF)
                                 return true
                             }
                             CONTROLOFFTYPES.MOMENTARY -> {
@@ -196,14 +216,23 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
                                 return true
                             }*/
                             CHORDOFFTYPES.FULLOFF -> {
-
-                                sendMidi (mVel, ON)
+                                if (mNoteToggle
+                                    && !mClicked)
+                                    sendMidi(0, OFF)
+                                else
+                                    sendMidi (mVel, ON)
                                 return true
 
                             }
                             CHORDOFFTYPES.ARPEGGIOFF,
                             CHORDOFFTYPES.ARPEGGIONOFF -> {
-                                mInRoll = true
+                                if (mNoteToggle && !mClicked) {
+                                    endArpeggio()
+                                    mInRoll = false
+                                    return true
+                                }
+                                else
+                                    mInRoll = true
                                 mNotePosition = 0
                                 mClockTicks = mRollNoteTime
                                 return true
@@ -221,11 +250,11 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
                 MotionEvent.ACTION_UP,
                 MotionEvent.ACTION_OUTSIDE,
                     -> {
-                    mInRoll = false
                     if (MainActivity.mConfigParams.mMode == ConfigParams.EDIT_MODE)
                         return@run
                     if (mType == MidiHelper.EventTypes.EVENT_NOTE) {
-
+                        if (!mNoteToggle)
+                            mInRoll = false
                         when (mNoteOFF) {
                             NOTEOFFTYPES.NOSENDOFF
                                 -> {
@@ -237,16 +266,25 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
                             }
 
                             NOTEOFFTYPES.SENDOFF -> {
-                                sendMidi(mVel, OFF)
+                                if (!mNoteToggle)
+                                    sendMidi(mVel, OFF)
+                                else
+                                    setClicked()
                                 return true
                             }
 
                             NOTEOFFTYPES.ROLL->{
-                                if (mRollTimer != null){
-                                    mRollTimer?.cancel()
-                                    mRollTimer = null
+                                if (!mNoteToggle) {
+                                    if (mRollTimer != null) {
+                                        mRollTimer?.cancel()
+                                        mRollTimer = null
+                                    }
+
+                                    sendMidi(mVel, OFF)
                                 }
-                                sendMidi (mVel, OFF)
+                                else
+                                    setClicked()
+                                return true
                             }
                             NOTEOFFTYPES.FLAM ->
                                 return true
@@ -261,8 +299,6 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
 
                         when (mControlOFF){
                             CONTROLOFFTYPES.TOGGLE->{
-                                mClicked = !mClicked
-                                sendMidi(0, if (mClicked) ON else OFF)
                                 setClicked()
                                 return true
                             }
@@ -277,10 +313,15 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
                             null->return@run
                         }
                     } else if (mType == MidiHelper.EventTypes.EVENT_CHORD){
-
+                        if (mNoteToggle) {
+                            setClicked()
+                        }
                         when (mChordOFF){
                             CHORDOFFTYPES.FULLOFF -> {
-                                sendMidi(mVel, OFF)
+                                if (!mNoteToggle)
+                                    sendMidi(mVel, OFF)
+                                else
+                                    setClicked()
                                 return true
                             }
                             CHORDOFFTYPES.FULLNOFF -> {
@@ -290,17 +331,12 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
                                 return true
                             }
                             CHORDOFFTYPES.ARPEGGIOFF->{
-                                val msg = ArrayList<UByte> ()
-                                val channel: UByte = if (mChannel != MidandpadDB.DEFAULT_CHANNEL)
-                                    mChannel.toUByte()
+                                if (!mNoteToggle) {
+                                    mInRoll = false
+                                    endArpeggio()
+                                }
                                 else
-                                    MainActivity.mConfigParams.mDefaultChannel
-                                val command = MidiHelper.STATUS_NOTE_OFF or channel
-                                val note = if (mNotePosition == 0) mChordNotes.last()
-                                    else mChordNotes[mNotePosition - 1]
-                                msg.add(note.toUByte())
-                                msg.add(0U)
-                                MainActivity.mMidi.send(command, msg.toUByteArray().toByteArray())
+                                    setClicked()
                                 return true
                             }
 
@@ -389,10 +425,8 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
 
 
     private fun setClicked (){
-        if (mClicked)
-            background = mONBG
-        else
-            background = mOFFBG
+            background = if (mClicked) mONBG
+            else mOFFBG
     }
     public fun setName (name: String){
         mName = name
@@ -511,6 +545,7 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
                 background = getd (R.drawable.chordbutton_background)
             }
         }
+        setTypeBackground()
     }
 
     private fun startRoll (){
@@ -518,5 +553,63 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
         mRollTimer!!.schedule(
             RollNote (mNoteNumber, mVel, mChannel), 0, MAXFLAMTIME)
     }
+    private fun stopRoll (){
+        if (mRollTimer != null){
+            mRollTimer?.cancel()
+            mRollTimer = null
+        }
+    }
 
+    fun unclick (){
+        mClicked = false
+        setClicked()
+    }
+
+    @OptIn(ExperimentalUnsignedTypes::class)
+    private fun endArpeggio (){
+        val msg = ArrayList<UByte> ()
+        val channel: UByte = if (mChannel != MidandpadDB.DEFAULT_CHANNEL)
+            mChannel.toUByte()
+        else
+            MainActivity.mConfigParams.mDefaultChannel
+        val command = MidiHelper.STATUS_NOTE_OFF or channel
+        val note = if (mNotePosition == 0) mChordNotes.last()
+        else mChordNotes[mNotePosition - 1]
+        msg.add(note.toUByte())
+        msg.add(0U)
+        MainActivity.mMidi.send(command, msg.toUByteArray().toByteArray())
+    }
+
+    fun setTypeBackground () {
+        if (mType == MidiHelper.EventTypes.EVENT_CONTROL) {
+            mOFFBG = ResourcesCompat.getDrawable(
+                resources,
+                R.drawable.ccbutton_off_background, null
+            )!!
+            mONBG = ResourcesCompat.getDrawable(
+                resources,
+                R.drawable.ccbutton_on_background, null
+            )!!
+        }
+        else if (mType == MidiHelper.EventTypes.EVENT_NOTE){
+            mOFFBG = ResourcesCompat.getDrawable(
+                resources,
+                R.drawable.notebutton_background, null
+            )!!
+            mONBG = ResourcesCompat.getDrawable(
+                resources,
+                R.drawable.notebuttonon_background, null
+            )!!
+        }
+        else if (mType == MidiHelper.EventTypes.EVENT_CHORD){
+            mOFFBG = ResourcesCompat.getDrawable(
+                resources,
+                R.drawable.chordbutton_background, null
+            )!!
+            mONBG = ResourcesCompat.getDrawable(
+                resources,
+                R.drawable.chordbuttonon_background, null
+            )!!
+        }
+    }
 }
