@@ -48,7 +48,8 @@ class CCBar : BoxedVertical, BoxedVertical.OnValuesChangeListener {
 
     @OptIn(ExperimentalUnsignedTypes::class)
     override fun onPointsChanged(boxedPoints: BoxedVertical?, points: Int) {
-        if (MainActivity.mConfigParams.mMode == ConfigParams.RUN_MODE) {
+        if (MainActivity.mConfigParams.mMode == ConfigParams.RUN_MODE &&
+            MainActivity.mMidi.haveConnection()) {
             var channel: UByte = MainActivity.mConfigParams.mDefaultChannel
             if (mChannel != MidandpadDB.DEFAULT_CHANNEL)
                 channel = mChannel.toUByte()
@@ -83,6 +84,10 @@ class CCBar : BoxedVertical, BoxedVertical.OnValuesChangeListener {
             editMe()
             /*if (boxedPoints != null)
                 boxedPoints.value = m_currpos*/
+        }
+        else if (!MainActivity.mMidi.haveConnection()){
+            showErrorDialog(context, "MIDI error", context.getString(R.string.nomidiconn))
+            return
         }
         else {
             if (mControl == PITCH_BEND){
@@ -131,7 +136,8 @@ class CCBar : BoxedVertical, BoxedVertical.OnValuesChangeListener {
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-        if (MainActivity.mConfigParams.mMode == ConfigParams.EDIT_MODE &&
+        if ((MainActivity.mConfigParams.mMode == ConfigParams.EDIT_MODE ||
+                    !MainActivity.mMidi.haveConnection()) &&
             event!!.action != MotionEvent.ACTION_UP)
             return true
 

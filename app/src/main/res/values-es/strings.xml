@@ -85,4 +85,5 @@
     <string name="sappouttitle">Dispositivo de salida de la aplicación</string>
     <string name="sport">Puerto</string>
     <string name="sappintitle">Dispositivo de entrada a la aplicación</string>
+    <string name="nomidiconn">No está conectado a un dispositivo MIDI</string>
 </resources>

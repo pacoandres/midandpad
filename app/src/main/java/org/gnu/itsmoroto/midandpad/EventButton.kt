@@ -134,7 +134,9 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
                 MotionEvent.ACTION_DOWN -> {
                     mClicked = !mClicked
                     mInRoll = false
-                    if (MainActivity.mConfigParams.mMode == ConfigParams.EDIT_MODE)
+                    if (MainActivity.mConfigParams.mMode == ConfigParams.EDIT_MODE
+                        || !MainActivity.mMidi.haveConnection()
+                    )
                         return@run
                     if (mType == MidiHelper.EventTypes.EVENT_NOTE) {
                         mVel = MainActivity.mConfigParams.getVelocity(p)
@@ -250,7 +252,8 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
                 MotionEvent.ACTION_UP,
                 MotionEvent.ACTION_OUTSIDE,
                     -> {
-                    if (MainActivity.mConfigParams.mMode == ConfigParams.EDIT_MODE)
+                    if (MainActivity.mConfigParams.mMode == ConfigParams.EDIT_MODE
+                        || !MainActivity.mMidi.haveConnection())
                         return@run
                     if (mType == MidiHelper.EventTypes.EVENT_NOTE) {
                         if (!mNoteToggle)
@@ -373,10 +376,13 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
     }
 
     private fun onclick (){
-        if (MainActivity.mConfigParams.mMode != ConfigParams.EDIT_MODE)
-            return
-        (context as MainActivity).mButtonConfigScreen.setButton(this)
-        (context as MainActivity).changeView((context as MainActivity).mButtonConfigScreen)
+        if (MainActivity.mConfigParams.mMode == ConfigParams.EDIT_MODE) {
+            (context as MainActivity).mButtonConfigScreen.setButton(this)
+            (context as MainActivity).changeView((context as MainActivity).mButtonConfigScreen)
+        }
+        else if (!MainActivity.mMidi.haveConnection()){
+            showErrorDialog(context, "MIDI error", context.getString(R.string.nomidiconn))
+        }
     }
 
     @OptIn(ExperimentalUnsignedTypes::class)
@@ -609,6 +615,16 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
             mONBG = ResourcesCompat.getDrawable(
                 resources,
                 R.drawable.chordbuttonon_background, null
+            )!!
+        }
+        else if (mType == MidiHelper.EventTypes.EVENT_PROGRAM){
+            mOFFBG = ResourcesCompat.getDrawable(
+                resources,
+                R.drawable.programbutton_background, null
+            )!!
+            mONBG = ResourcesCompat.getDrawable(
+                resources,
+                R.drawable.programbutton_background, null
             )!!
         }
     }
