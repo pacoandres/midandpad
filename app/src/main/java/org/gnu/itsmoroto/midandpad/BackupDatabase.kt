@@ -191,7 +191,17 @@ class BackupDatabase {
                         }
                         continue
                     }
-                    val out = FileOutputStream (File (tmpdir, ze.name))
+                    /**
+                     * Changes recommended by google.
+                     * https://support.google.com/faqs/answer/9294009https://support.google.com/faqs/answer/9294009
+                     */
+                    val fout = File (tmpdir, ze.name)
+                    if (!fout.canonicalPath.startsWith(tmpdir.canonicalPath)){
+                        showErrorDialog(context, context.getString(R.string.srestoreerror),
+                            "Zip Path Traversal attack. Not restoring.")
+                        return null
+                    }
+                    val out = FileOutputStream (fout)
 
                     while (true){
                         count = zip.read(data, 0, BUFFSIZE)

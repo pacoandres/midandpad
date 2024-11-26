@@ -100,8 +100,9 @@ class MainActivity : AppCompatActivity(), Runnable {
                 AppEvents.START->{
                     //Crashes when orientation changes.
                     //May be this solves: https://codingtechroom.com/question/resolving-java-lang-illegalstateexception-fragmentmanager-has-been-destroyed
-                    supportFragmentManager.beginTransaction().remove(mSplashScreen)
-                        .commit()
+                    if (!supportFragmentManager.isDestroyed)
+                        supportFragmentManager.beginTransaction().remove(mSplashScreen)
+                            .commit()
                     doAfter ()
 
                 }
