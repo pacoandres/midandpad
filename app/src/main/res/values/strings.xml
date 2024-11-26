@@ -104,4 +104,5 @@
     <string name="sappouttitle">App output device:</string>
     <string name="sport">Port</string>
     <string name="sappintitle">App input device</string>
+    <string name="nomidiconn">Not connected to a MIDI device</string>
 </resources>

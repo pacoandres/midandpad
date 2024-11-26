@@ -126,3 +126,10 @@ doc/
 # relase and debug
 app/release/
 app/debug/
+
+
+#For ghostwriter leftovers
+*.qss
+
+#Don't commit
+functional_ideas*

@@ -7,6 +7,8 @@ Aprovechando la posibilidad que existe en Android de utilizar el puerto USB como
 
 Esta aplicación es un controlador MIDI, con lo que no reproduce ningún sonido. Para ello tiene que estar conectada a un sintetizador MIDI como Timidity o Fluidsynth.
 
+Si quieres verlo en funcionamiento pincha en el [ enlace al vídeo de demostración](https://youtu.be/Ve9VherU25M?feature=shared)
+
 ## Descarga
 
 La aplicación se puede descargar e instalar de varias maneras:

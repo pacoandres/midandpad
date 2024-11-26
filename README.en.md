@@ -9,6 +9,7 @@ Since Android 6.0 the USB port can be used as a MIDI interface, so a fairly comp
 
 Notice that it's a MIDI controller, so it doesn't play any sound. For playing sounds it must be connected to a MIDI synth like Timidity or Fluidsynth.
 
+You can see it in action clicking on the [link to Youtube demo video](https://youtu.be/Ve9VherU25M?feature=shared)
 ## Download
 
 The app can be downloaded and installed in multiple ways:
@@ -43,7 +44,7 @@ https://openclipart.org/detail/212344/folder-green-semitransparent)
  
 * [Jammi Evil](https://openclipart.org/artist/Jammi%20Evil) for the image [https://openclipart.org/detail/172691/zoomoutfinger](https://openclipart.org/detail/172691/zoomoutfinger)
 
-## Licencia
+## License
 This project is under GPL v3.0 license, whose terms and conditions can be read at [GPL v3.0 license](./LICENSE)
 
 ## Privacy
