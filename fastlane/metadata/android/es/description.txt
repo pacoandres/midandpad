@@ -1,0 +1,5 @@
+Un controlador MIDI para Android.
+
+Más información en: https://github.com/pacoandres/midandpad
+
+<strong>IMPORTANTE: esta aplicación es un controlador MIDI y no reproduce ningún sonido</strong>. Para ello debe estar conectada a un sintetizador MIDI (por ejemplo: timidity or fluidsynth)

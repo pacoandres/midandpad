@@ -1,0 +1,4 @@
+* Limit target devices on Manifest.
+* Fixed wrong background when a button type changes to program.
+* Fixed *IllegalStateException* sometimes when screen orientation changes.
+* Fixed Zip path transversal vulnerability as indicated in https://support.google.com/faqs/answer/9294009
