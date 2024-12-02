@@ -16,10 +16,10 @@ The app can be downloaded and installed in multiple ways:
 
 
 * In the [Releases page](https://github.com/pacoandres/midandpad/releases/)
-* In the [playstore] (pending).
+* At the [Play store](https://play.google.com/store/apps/details?id=org.gnu.itsmoroto.midandpad).
+* At [F-Droid] (pending).
 * Downloading and compiling.
 
-(May be in the future in F-Droid, but need some time)
 
 ## Manual
 For reading de users manual [English manual](https://github.com/pacoandres/midandpad/wiki/English-manual)

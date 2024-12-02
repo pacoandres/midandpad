@@ -1,4 +1,10 @@
 # Changelog
+## V1.2.3 (20241201)
+* Allow SD card installation.
+* Security improvements for gradle compiler.
+
+## V1.2.1 (20241128)
+* Minimal changes for f-droid compilant
 
 ## V1.2 (20241126)
 * Changelog added.
