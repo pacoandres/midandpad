@@ -15,9 +15,9 @@ You can see it in action clicking on the [link to Youtube demo video](https://yo
 The app can be downloaded and installed in multiple ways:
 
 
-* In the [Releases page](https://github.com/pacoandres/midandpad/releases/)
-* At the [Play store](https://play.google.com/store/apps/details?id=org.gnu.itsmoroto.midandpad).
-* At [F-Droid] (pending).
+* In the [Releases page](https://github.com/pacoandres/midandpad/releases/latest)
+* At the [Play store](https://play.google.com/store/apps/details?id=org.gnu.itsmoroto.midandpad)
+* At [F-Droid](https://f-droid.org/packages/org.gnu.itsmoroto.midandpad/)
 * Downloading and compiling.
 
 
