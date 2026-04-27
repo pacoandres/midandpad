@@ -15,7 +15,7 @@ La aplicación se puede descargar e instalar de varias maneras:
 
 
 * A través de [Releases](https://github.com/pacoandres/midandpad/releases/latest)
-* A través de [Play Store](https://play.google.com/store/apps/details?id=org.gnu.itsmoroto.midandpad).
+* A través de Play store (eliminada debido a la nueva política absurda de Google según la cual hay que realizar actualizaciones periódicas aunque no sean necesarias. Por no hacerlas Google ha eliminado toda la cuenta).
 * A través de [F-Droid](https://f-droid.org/packages/org.gnu.itsmoroto.midandpad/).
 * Descargando el código y compilándolo.
 
