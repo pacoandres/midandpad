@@ -119,7 +119,8 @@
         android:layout_margin="@dimen/controlbuttonmargin"
         android:textSize="@dimen/labelsize"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/propscontainer" />
+        app:layout_constraintTop_toBottomOf="@+id/propscontainer"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <Button
         android:id="@+id/buttonpropok"
@@ -129,7 +130,8 @@
         android:layout_margin="@dimen/controlbuttonmargin"
         android:textSize="@dimen/labelsize"
         app:layout_constraintEnd_toStartOf="@+id/buttonpropcancel"
-        app:layout_constraintTop_toBottomOf="@+id/propscontainer" />
+        app:layout_constraintTop_toBottomOf="@+id/propscontainer"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 
 

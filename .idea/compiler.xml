@@ -5,5 +5,9 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_STRING" value="-Xlint:deprecation" />
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="AndroidStudioProjects.Midandpad" options="" />
+      <module name="Midandpad.app" options="" />
+    </option>
   </component>
 </project>

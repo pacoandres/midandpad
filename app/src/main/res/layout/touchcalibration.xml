@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/layout_background">
 
 <androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/touchcalibration"
@@ -139,7 +140,8 @@
         android:textSize="@dimen/labelsize"
         android:text="@string/sok"
         app:layout_constraintTop_toBottomOf="@+id/labelmaxpress"
-        app:layout_constraintEnd_toStartOf="@+id/cancelcalib"/>
+        app:layout_constraintEnd_toStartOf="@+id/cancelcalib"
+        app:layout_constraintBottom_toBottomOf="parent"/>
     <Button
         android:id="@+id/cancelcalib"
         android:layout_width="wrap_content"
@@ -149,6 +151,7 @@
         android:text="@string/scancel"
         app:layout_constraintTop_toBottomOf="@+id/labelmaxpress"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
