@@ -1,19 +1,19 @@
 plugins {
     id("com.android.application")
-    id("org.jetbrains.kotlin.android")
-    id ("kotlin-kapt")
+    //id("org.jetbrains.kotlin.android")
+    //id ("kotlin-kapt")
 }
 
 android {
     namespace = "org.gnu.itsmoroto.midandpad"
-    compileSdk = 35
+    compileSdk = 37
     buildFeatures.buildConfig = true //Needed for buildConfigField to work.
     defaultConfig {
         applicationId = "org.gnu.itsmoroto.midandpad"
         minSdk = 24
-        targetSdk = 35
-        versionCode = 5
-        versionName = "1.2.2"
+        targetSdk = 37
+        versionCode = 6
+        versionName = "1.3"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("Integer", "dbversion", "2")
     }
@@ -27,16 +27,19 @@ android {
     compileOptions {
         //sourceCompatibility = VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
+/*    kotlinOptions {
         //jvmTarget = "1.8"
-        jvmTarget = "17"
-    }
+        java.targetCompatibility = JavaVersion.VERSION_17
+
+    }*/
     sourceSets {
         getByName("main") {
             res {
-                srcDirs("src/main/res", "src/main/res/eventbutton"
-                )
+                //srcDirs(MutableSet<String>("src/main/res", "src/main/res/eventbutton")
+                directories.add ("src/main/res")
+                directories.add ("src/main/res/eventbutton")
             }
         }
     }
@@ -47,20 +50,24 @@ android {
         // Disables dependency metadata when building Android App Bundles.
         includeInBundle = false
     }
+    buildToolsVersion = "37.0.0"
+    compileSdkMinor = 0
 
 
 }
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.15.0")
-    implementation("androidx.appcompat:appcompat:1.7.0")
-    implementation("com.google.android.material:material:1.12.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.2.0")
+    implementation("androidx.core:core-ktx:1.19.0")
+    implementation("androidx.appcompat:appcompat:1.7.1")
+    implementation("com.google.android.material:material:1.14.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.2.1")
+    implementation("androidx.documentfile:documentfile:1.1.0")
     testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.2.1")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
-    implementation ("com.github.alpbak:BoxedVerticalSeekBar:1.1.1")
+    androidTestImplementation("androidx.test.ext:junit:1.3.0")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.7.0")
+    //implementation ("com.github.alpbak:BoxedVerticalSeekBar:1.1.1")
+    implementation("com.github.ML-SPD:BoxedVerticalSeekBar:v1.1.1-fix5")
 }
 java {
     toolchain {

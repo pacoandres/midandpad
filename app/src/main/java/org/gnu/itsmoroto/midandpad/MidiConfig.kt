@@ -12,7 +12,6 @@ import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import androidx.collection.emptyLongSet
 import androidx.constraintlayout.widget.ConstraintLayout
 
 class MidiConfig (context: Context):ConstraintLayout (context) {

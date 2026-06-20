@@ -268,7 +268,8 @@
         android:textSize="@dimen/labelsize"
         android:text="@string/sopen"
         app:layout_constraintTop_toBottomOf="@+id/labelchannel"
-        app:layout_constraintEnd_toStartOf="@+id/cancelcalib"/>
+        app:layout_constraintEnd_toStartOf="@+id/cancelcalib"
+        app:layout_constraintBottom_toBottomOf="parent"/>
     <Button
         android:id="@+id/cancelcalib"
         android:layout_width="wrap_content"
@@ -278,6 +279,7 @@
         android:text="@string/scancel"
         app:layout_constraintTop_toBottomOf="@+id/labelchannel"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         />
 
     <androidx.constraintlayout.widget.Barrier

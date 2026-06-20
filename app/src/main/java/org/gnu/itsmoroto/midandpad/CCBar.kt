@@ -96,7 +96,7 @@ class CCBar : BoxedVertical, BoxedVertical.OnValuesChangeListener {
                 val command: UByte = MidiHelper.STATUS_PITCH_BEND or channel
                 val msg = ubyteArrayOf(0U, PITCHCENTERU)
                 MainActivity.mMidi.send(command, msg.toByteArray())
-                value = PITCHCENTER.toInt()
+                value = PITCHCENTER
             }
             else if (mRZ) {
                 val channel = if (mChannel != MidandpadDB.DEFAULT_CHANNEL) mChannel.toUByte()
