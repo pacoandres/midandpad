@@ -30,6 +30,7 @@ Para acceder al manual de uso (aunque tampoco es tan complicada)
 
 
 * [Alpaslan Bak](https://github.com/alpbak) por el widget [BoxedVerticalSeekBar](https://github.com/alpbak/BoxedVerticalSeekBar)
+(Ahora usando la version de [ML-SPD](https://github.com/ML-SPD/BoxedVerticalSeekBar) por errores de compilación)
 
 
 * [neilbgr](https://openclipart.org/artist/neilbgr) por el diseño de [https://openclipart.org/detail/231239/midi-female-connector](https://openclipart.org/detail/231239/midi-female-connector)

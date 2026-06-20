@@ -82,7 +82,7 @@ class ExploreScreen(context: Context): ConstraintLayout(context)  {
         if (mSelectedIndex == -1)
             return
         val sel: PresetItem = mList.getItemAtPosition(mSelectedIndex) as PresetItem
-        MainActivity.mConfigParams.loadPreset(sel.id.toLong())
+        MainActivity.mConfigParams.loadPreset(sel.id)
         (context as MainActivity).updateChannelPPQ()
         (context as MainActivity).configControls()
         Toast.makeText(context, resources.getString(R.string.spresetloaded

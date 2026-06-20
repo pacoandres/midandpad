@@ -30,7 +30,7 @@ For reading de users manual [English manual](https://github.com/pacoandres/midan
 
 
 * [Alpaslan Bak](https://github.com/alpbak) for the widget [BoxedVerticalSeekBar](https://github.com/alpbak/BoxedVerticalSeekBar)
-
+(Now using [ML-SPD](https://github.com/ML-SPD/BoxedVerticalSeekBar) version to avoid building errors)
 
 * [neilbgr](https://openclipart.org/artist/neilbgr) for the image [https://openclipart.org/detail/231239/midi-female-connector](https://openclipart.org/detail/231239/midi-female-connector)
 

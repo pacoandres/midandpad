@@ -393,9 +393,9 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
         when (mType) {
             MidiHelper.EventTypes.EVENT_NOTE -> {
                 command = if (type == ON)
-                    MidiHelper.STATUS_NOTE_ON or channel.toUByte()
+                    MidiHelper.STATUS_NOTE_ON or channel
                 else
-                    MidiHelper.STATUS_NOTE_OFF or channel.toUByte()
+                    MidiHelper.STATUS_NOTE_OFF or channel
 
                 msg.add(mNoteNumber.toUByte())
                 msg.add(vel.toUByte())
@@ -403,9 +403,9 @@ class EventButton : androidx.appcompat.widget.AppCompatButton {
 
             MidiHelper.EventTypes.EVENT_CHORD -> {
                 command = if (type == ON)
-                    MidiHelper.STATUS_NOTE_ON or channel.toUByte()
+                    MidiHelper.STATUS_NOTE_ON or channel
                 else
-                    MidiHelper.STATUS_NOTE_OFF or channel.toUByte()
+                    MidiHelper.STATUS_NOTE_OFF or channel
 
                 for (note in mChordNotes) {
                     msg.add(note.toUByte())

@@ -51,7 +51,7 @@ class BackupDatabase {
                 )
                 val data: ByteArray = ByteArray(BUFFSIZE)
                 val md = MessageDigest.getInstance("MD5")
-                for (file in databasesdir!!.listFiles()!!) {
+                for (file in databasesdir.listFiles()!!) {
                     Log.v("Compress", "Adding: ${file.name}")
                     val fi: FileInputStream = FileInputStream(file)
                     origin = BufferedInputStream(fi, BUFFSIZE)
@@ -119,14 +119,14 @@ class BackupDatabase {
                     return
                 }
                 orig = FileInputStream (tmpzip)
-                if (orig == null){
+                /*if (orig == null){
                     showErrorDialog(context, context.getString(R.string.sbackuperror),
                         "Can't read compressed backup")
                     dest.close()
                     tmpzip.delete()
                     zipfile.delete()
                     return
-                }
+                }*/
                 val data: ByteArray = ByteArray(BUFFSIZE)
                 var count = 0
                 while (true){
