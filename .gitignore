@@ -134,3 +134,6 @@ app/debug/
 
 #Don't commit
 functional_ideas*
+
+.fdroid.yml
+/repo

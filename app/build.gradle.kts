@@ -12,8 +12,8 @@ android {
         applicationId = "org.gnu.itsmoroto.midandpad"
         minSdk = 24
         targetSdk = 37
-        versionCode = 6
-        versionName = "1.3"
+        versionCode = 10301
+        versionName = "1.3.1"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("Integer", "dbversion", "2")
     }
@@ -26,8 +26,8 @@ android {
     }
     compileOptions {
         //sourceCompatibility = VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_17
-        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_21
+        sourceCompatibility = JavaVersion.VERSION_21
     }
 /*    kotlinOptions {
         //jvmTarget = "1.8"
@@ -71,6 +71,6 @@ dependencies {
 }
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+        languageVersion = JavaLanguageVersion.of(21)
     }
 }

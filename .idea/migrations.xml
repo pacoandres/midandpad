@@ -4,6 +4,7 @@
     <option name="MigrateToGradleLocalJavaHome">
       <set>
         <option value="/mnt/datos_ext4/paco/AndroidStudioProjects/Midandpad" />
+        <option value="$PROJECT_DIR$" />
       </set>
     </option>
   </component>
